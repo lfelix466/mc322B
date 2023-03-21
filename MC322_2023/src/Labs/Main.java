@@ -6,10 +6,9 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		
-		Sinistro cliente = new Sinistro("1010", "rua");
-		Sinistro cliente2 = new Sinistro("1010", "rua");
-		System.out.println(cliente.getId());
-		System.out.println(cliente2.getId());
+		Cliente cliente = new Cliente("teste", "1010", "teste", "teste", "teste");
+		
+		System.out.println(cliente.ValidarCPF("10101010101"));
 		
 	}
 
