@@ -106,7 +106,6 @@ public class Cliente {
 	
 	public boolean ValidarCPF(String cpf) {
 		
-		/*Terminar essa funcao*/
 		cpf = cpf.replaceAll("[^0-9]+", "");
 		
 		char texto1 = 0, texto2;
