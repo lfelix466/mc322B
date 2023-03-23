@@ -7,8 +7,9 @@ public class Main {
 
 		
 		Cliente cliente = new Cliente("teste", "1010", "teste", "teste", "teste");
-		
-		System.out.println(cliente.ValidarCPF("123548687512"));
+		Seguradora seguradora = new Seguradora("teste", "1010101010", "teste", "teste");
+		Sinistro sinistro = new Sinistro("101010", "teste");
+		Veiculo veiculo = new Veiculo("101010", "teste", "teste");
 		
 	}
 

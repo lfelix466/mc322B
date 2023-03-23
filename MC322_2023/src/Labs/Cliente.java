@@ -71,13 +71,15 @@ public class Cliente {
 	private boolean VerificaDigitoCPF(String cpf) {
 		int dig1, dig2, valor1 = 0, valor2 = 0;
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 9; i++) {
 			
 			valor2 += Integer.parseInt(String.valueOf(cpf.charAt(i)))*(11-i);
 			
-			if(i != 9) {
-				valor1 += Integer.parseInt(String.valueOf(cpf.charAt(i)))*(10-i);
-			}}
+			valor1 += Integer.parseInt(String.valueOf(cpf.charAt(i)))*(10-i);
+		
+		}
+		
+		valor2 += Integer.parseInt(String.valueOf(cpf.charAt(9)))*(2);
 		
 		if(valor1%11 == 0 || valor1%11 == 1) {
 			dig1 = 0;
