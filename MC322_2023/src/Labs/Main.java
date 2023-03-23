@@ -8,7 +8,7 @@ public class Main {
 		
 		Cliente cliente = new Cliente("teste", "1010", "teste", "teste", "teste");
 		
-		System.out.println(cliente.ValidarCPF("10101010101"));
+		System.out.println(cliente.ValidarCPF("123548687512"));
 		
 	}
 

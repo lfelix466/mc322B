@@ -82,13 +82,13 @@ public class Cliente {
 		if(valor1%11 == 0 || valor1%11 == 1) {
 			dig1 = 0;
 		}else {	
-			dig1 = 11-valor1;
+			dig1 = 11-(valor1%11);
 		}
 		
 		if(valor2%11 == 0 || valor2%11 == 1) {
 			dig2 = 0;
 		}else {	
-			dig2 = 11-valor2;
+			dig2 = 11-(valor2%11);
 		}
 		
 		
@@ -134,7 +134,9 @@ public class Cliente {
 					return false;
 				}
 			
-			
+			if(!VerificaDigitoCPF(cpf)) {
+				return false;
+			}
 				
 		}else {
 			
