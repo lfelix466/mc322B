@@ -1,4 +1,6 @@
-package Labs;
+package Classes_principais;
+
+import java.util.Scanner;
 
 public class Veiculo {
 	
@@ -6,7 +8,7 @@ public class Veiculo {
 	private String marca;
 	private String modelo;
 	private int anoFabricacao;
-	
+	private Scanner entrada = new Scanner(System.in);
 	
 	//Contrutor
 	public Veiculo(String placa, String marca, String modelo, int anoFabricacao) {
@@ -60,6 +62,20 @@ public class Veiculo {
 				+ anoFabricacao + "]";
 	}
 	
-	
+	public Veiculo cadastrarVeiculo() {
+		
+		Veiculo veiculo = new Veiculo(null, null, null, 0);
+		
+		System.out.println("Digite a placa do veiculo:");
+		veiculo.setPlaca(entrada.nextLine());
+		System.out.println("Digite a marca do veiculo:");
+		veiculo.setMarca(entrada.nextLine());
+		System.out.println("Digite o modelo do veiculo:");
+		veiculo.setModelo(entrada.nextLine());
+		System.out.println("Digite o ano de fabricacao do veiculo:");
+		veiculo.setAnoFabricacao(entrada.nextInt());
+		
+		return veiculo;
+	}
 
 }
