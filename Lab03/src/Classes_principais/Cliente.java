@@ -12,11 +12,11 @@ public class Cliente{
 	private String educacao;
 	private String genero;
 	private String classeEconomica;
-	private List<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
+	private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
 	
 	
 	public Cliente(String nome, String endereco, Date dataLicensa, String educacao, String genero,
-			String classeEconomica, List<Veiculo> listaVeiculos) {
+			String classeEconomica, ArrayList<Veiculo> listaVeiculos) {
 		super();
 		this.nome = nome;
 		this.endereco = endereco;
@@ -93,7 +93,7 @@ public class Cliente{
 	}
 
 
-	public void setListaVeiculos(List<Veiculo> listaVeiculos) {
+	public void setListaVeiculos(ArrayList<Veiculo> listaVeiculos) {
 		this.listaVeiculos = listaVeiculos;
 	}
 	

@@ -1,8 +1,10 @@
 package Classes_principais;
 
 import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Cliente_PJ extends Cliente{
 	
@@ -11,13 +13,11 @@ public class Cliente_PJ extends Cliente{
 	private Scanner entrada = new Scanner(System.in);
 	
 	public Cliente_PJ(String nome, String endereco, Date dataLicensa, String educacao, String genero,
-			String classeEconomica, List<Veiculo> listaVeiculos, String cnpj, Date dataFundacao) {
+			String classeEconomica, ArrayList<Veiculo> listaVeiculos, String cnpj, Date dataFundacao) {
 		super(nome, endereco, dataLicensa, educacao, genero, classeEconomica, listaVeiculos);
 		this.cnpj = cnpj;
 		this.dataFundacao = dataFundacao;
 	}
-	
-	
 
 	public Date getDataFundacao() {
 		return dataFundacao;
@@ -143,59 +143,45 @@ public class Cliente_PJ extends Cliente{
 		return true;
 	}
 
-	/*
-	public boolean CadastrarCliente(Cliente_PJ cliente) {
+	
+	public boolean CadastrarCliente(Seguradora seguradora) {
 		
-		Date dataLicensa = null, dataFundacao = null;
-		int numeroCarros;
+		String cnpj;
+		cnpj = entrada.nextLine();
 		
-		System.out.println("Digite o nome do cliente:");
-		cliente.setNome(entrada.nextLine());
-		System.out.println("Digite o endereco do cliente:");
-		cliente.setEndereco(entrada.nextLine());
+		if(validarCNPJ(cnpj)) {
 		
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Cliente_PJ cliente_aux = new Cliente_PJ(null, null, null, null, null, null, null, cnpj, null);
 			
-			System.out.println("Digite a data da liscenca do cliente:");
-			dataLicensa = formatter.parse(entrada.nextLine());
+			Date dataFundacao = null;
 			
-			System.out.println("Digite a data de nascimento do cliente:");
-			dataFundacao = formatter.parse(entrada.nextLine());
+			try {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				
+				System.out.println("Digite a data de nascimento do cliente:");
+				dataFundacao = formatter.parse(entrada.nextLine());
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
 			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		cliente.setDataLicensa(dataLicensa);
-		cliente.setDataFundacao(dataFundacao);
-		
-		System.out.println("Digite a educaco do cliente:");
-		cliente.setNome(entrada.nextLine());
-		System.out.println("Digite o genero do cliente:");
-		cliente.setNome(entrada.nextLine());
-		System.out.println("Digite a classe economica do cliente:");
-		cliente.setNome(entrada.nextLine());
-		System.out.println("Digite a classe economica do cliente:");
-		cliente.setNome(entrada.nextLine());
-		
-		System.out.println("Quantos carros o cliente tem?");
-		numeroCarros = entrada.nextInt();
-		
-		for(int i = 0; i<numeroCarros; i++) {
+			cliente_aux.setDataFundacao(dataFundacao);
 			
-			Veiculo veiculo = new Veiculo(null, null, null, 0);
+			seguradora.cadastrarCliente(cliente_aux);
 			
-			cliente.getListaVeiculos().add(veiculo.CadastrarVeiculo());
+			return true;
 			
-			cliente.setListaVeiculos(cliente.getListaVeiculos());
+		}else {
+			
+			System.out.println("CNPJ não e valido!");
 			
 		}
 		
-		return true;
+		return false;
+	
 	}
-	*/
+	
 	
 }

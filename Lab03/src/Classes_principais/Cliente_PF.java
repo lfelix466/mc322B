@@ -1,8 +1,10 @@
 package Classes_principais;
 
 import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Cliente_PF extends Cliente{
 
@@ -12,7 +14,7 @@ public class Cliente_PF extends Cliente{
 
 
 	public Cliente_PF(String nome, String endereco, Date dataLicensa, String educacao, String genero,
-			String classeEconomica, List<Veiculo> listaVeiculos, String cpf, Date dataNascimento) {
+			String classeEconomica, ArrayList<Veiculo> listaVeiculos, String cpf, Date dataNascimento) {
 		super(nome, endereco, dataLicensa, educacao, genero, classeEconomica, listaVeiculos);
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
@@ -146,60 +148,43 @@ public class Cliente_PF extends Cliente{
 		return true;
 	}
 
-	/*
+	public boolean CadastrarCliente(Seguradora seguradora) {
+		
+		String cpf;
+		cpf = entrada.nextLine();
+		
+		if(validarCPF(cpf)) {
+		
+			Cliente_PF cliente_aux = new Cliente_PF(null, null, null, null, null, null, null, cpf, null);
+			
+			Date dataNascimento = null;
+			
+			try {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				
+				System.out.println("Digite a data de nascimento do cliente:");
+				dataNascimento = formatter.parse(entrada.nextLine());
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+			
+			cliente_aux.setDataNascimento(dataNascimento);
+			
+			seguradora.cadastrarCliente(cliente_aux);
+			
+			return true;
+			
+		}else {
+			
+			System.out.println("CPF não e valido!");
+			
+		}
+		
+		return false;
 	
-	public boolean CadastrarCliente(Cliente_PF cliente) {
-
-		Date dataLicensa = null, dataNascimento = null;
-		int numeroCarros;
-
-		System.out.println("Digite o nome do cliente:");
-		cliente.setNome(entrada.nextLine());
-		System.out.println("Digite o endereco do cliente:");
-		cliente.setEndereco(entrada.nextLine());
-
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-			System.out.println("Digite a data da licenca do cliente:");
-			dataLicensa = formatter.parse(entrada.nextLine());
-
-			System.out.println("Digite a data de nascimento do cliente:");
-			dataNascimento = formatter.parse(entrada.nextLine());
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Data invalida!");
-			return false;
-		}
-
-		cliente.setDataLicensa(dataLicensa);
-		cliente.setDataNascimento(dataNascimento);
-
-		System.out.println("Digite a educaco do cliente:");
-		cliente.setEducacao(entrada.nextLine());
-		System.out.println("Digite o genero do cliente:");
-		cliente.setGenero(entrada.nextLine());
-		System.out.println("Digite a classe economica do cliente:");
-		cliente.setClasseEconomica(entrada.nextLine());
-
-		System.out.println("Quantos carros o cliente tem?");
-		numeroCarros = entrada.nextInt();
-
-		for(int i = 0; i<numeroCarros; i++) {
-
-			Veiculo veiculo = new Veiculo(null, null, null, 0);
-
-			cliente.getListaVeiculos().add(veiculo.CadastrarVeiculo());
-
-			cliente.setListaVeiculos(cliente.getListaVeiculos());
-
-		}
-
-		return true;
 	}
-	
-	*/
 
 }

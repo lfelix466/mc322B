@@ -17,6 +17,10 @@ public class Veiculo {
 		this.modelo = modelo;
 		this.anoFabricacao = anoFabricacao;
 	}
+	
+	public Veiculo() {
+		
+	}
 		
 	//Getters e setters
 	public String getPlaca() {

@@ -13,14 +13,14 @@ public class Seguradora {
 	private String telefone ;
 	private String email ;
 	private String endereco ;
-	private List<Sinistro> listaSinistro = new ArrayList<Sinistro>();
-	private List<Cliente> listaClientes = new ArrayList<Cliente>();
+	private ArrayList<Sinistro> listaSinistro = new ArrayList<Sinistro>();
+	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 	
 	Scanner entrada = new Scanner(System.in);
 	
 	//Construtor
-	public Seguradora(String nome, String telefone, String email, String endereco, List<Sinistro> listaSinistro,
-			List<Cliente> listaClientes) {
+	public Seguradora(String nome, String telefone, String email, String endereco, ArrayList<Sinistro> listaSinistro,
+			ArrayList<Cliente> listaClientes) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
@@ -32,113 +32,55 @@ public class Seguradora {
 
 	//Funcoes
 	public boolean cadastrarCliente(Cliente cliente){
-		
-		//int opcao;
-		//String dado;
-		
+
+			
 		Date dataLicensa = null;
 		int numeroCarros;
-		
+			
 		System.out.println("Digite o nome do cliente:");
 		cliente.setNome(entrada.nextLine());
 		System.out.println("Digite o endereco do cliente:");
 		cliente.setEndereco(entrada.nextLine());
-		
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			
-			System.out.println("Digite a data da liscenca do cliente:");
-			dataLicensa = formatter.parse(entrada.nextLine());
-			
-			//System.out.println("Digite a data de nascimento do cliente:");
-			//dataFundacao = formatter.parse(entrada.nextLine());
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		cliente.setDataLicensa(dataLicensa);
-		//cliente.setDataFundacao(dataFundacao);
-		
-		System.out.println("Digite a educacao do cliente:");
-		cliente.setEducacao(entrada.nextLine());
-		System.out.println("Digite o genero do cliente:");
-		cliente.setGenero(entrada.nextLine());
-		System.out.println("Digite a classe economica do cliente:");
-		cliente.setClasseEconomica(entrada.nextLine());
-		
-		System.out.println("Quantos carros o cliente tem?");
-		numeroCarros = entrada.nextInt();
-		
-		for(int i = 0; i<numeroCarros; i++) {
-			
-			Veiculo veiculo = new Veiculo(null, null, null, 0);
-			
-			if(i == 0) {
-				cliente.getListaVeiculos().set(0, veiculo.cadastrarVeiculo());
-			}else {
-				cliente.getListaVeiculos().add(veiculo.cadastrarVeiculo());
+			try {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				
+				System.out.println("Digite a data da licenca do cliente:");
+				dataLicensa = formatter.parse(entrada.nextLine());
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
 			}
 			
-			System.out.println("Veiculo cadastrado!");
+			cliente.setDataLicensa(dataLicensa);
 			
-		}
-		
-		if(listaClientes.get(0) == null) {
-			listaClientes.set(0, cliente);
-		}else {
-			listaClientes.add(cliente);
-		}
-		
-		/*
-		do {
+			System.out.println("Digite a educacao do cliente:");
+			cliente.setEducacao(entrada.nextLine());
+			System.out.println("Digite o genero do cliente:");
+			cliente.setGenero(entrada.nextLine());
+			System.out.println("Digite a classe economica do cliente:");
+			cliente.setClasseEconomica(entrada.nextLine());
 			
-			System.out.println("Qual tipo de cliente deseja cadastrar?\n"
-					+ "1 - PF\n"
-					+ "2 - PJ\n"
-					+ "3 - Sair");
-			opcao = entrada.nextInt();
+			System.out.println("Quantos carros o cliente tem?");
+			numeroCarros = entrada.nextInt();
 			
-			if(opcao == 1) {
+			for(int i = 0; i<numeroCarros; i++) {
 				
-				Cliente_PF clienteAux = new Cliente_PF(null, null, null, null, null, null, null, null, null);
-				System.out.println("Digite o CPF do cliente:");
-				entrada.nextLine();
-				dado = entrada.nextLine();
+				Veiculo veiculo = new Veiculo();
 				
-				if(clienteAux.ValidarCPF(dado)) {
-					
-					Cliente_PF clientePF = new Cliente_PF(null, null, null, null, null, null, null, dado, null);
-					clientePF.CadastrarCliente(clientePF);
-					listaClientes.add(clientePF);
-					return true;
+				if(i == 0) {
+					cliente.getListaVeiculos().set(0, veiculo.cadastrarVeiculo());
 				}else {
-					System.out.println("CPF invalido!");
+					cliente.getListaVeiculos().add(veiculo.cadastrarVeiculo());
 				}
 				
-				
-			}else if(opcao == 2) {
-				
-				Cliente_PJ clienteAux = new Cliente_PJ(null, null, null, null, null, null, null, null, null);
-				System.out.println("Digite o cpf do cliente:");
-				dado = entrada.nextLine();
-				
-				if(!clienteAux.ValidarCNPJ(dado)) {
-					
-					Cliente_PJ clientePJ = new Cliente_PJ(null, null, null, null, null, null, null, dado, null);
-					clientePJ.CadastrarCliente(clientePJ);
-					listaClientes.add(clientePJ);
-					return true;
-				}
+				System.out.println("Veiculo cadastrado!");
 				
 			}
 			
-		}while(opcao != 3);
-		
-		*/
-		return true;
+			return true;
 		
 	}
 	
@@ -219,14 +161,6 @@ public class Seguradora {
 		}else{
 			listaSinistro.add(sinistro);
 		}
-		
-		/*System.out.println("Digite a seguradora do sinistro:");
-		sinistro.setSeguradora(entrada.nextLine());
-		System.out.println("Digite o veiculo do sinistro:");
-		sinistro.setVeiculo(entrada.nextLine());
-		System.out.println("Digite o cliente do sinistro:");
-		sinistro.setCliente(entrada.nextLine());
-		*/
 		
 		return true;
 	}
@@ -318,7 +252,7 @@ public class Seguradora {
 		return listaSinistro;
 	}
 
-	public void setListaSinistro(List<Sinistro> listaSinistro) {
+	public void setListaSinistro(ArrayList<Sinistro> listaSinistro) {
 		this.listaSinistro = listaSinistro;
 	}
 
@@ -326,7 +260,7 @@ public class Seguradora {
 		return listaClientes;
 	}
 
-	public void setListaClientes(List<Cliente> listaClientes) {
+	public void setListaClientes(ArrayList<Cliente> listaClientes) {
 		this.listaClientes = listaClientes;
 	}
 
