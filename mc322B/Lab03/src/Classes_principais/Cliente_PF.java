@@ -104,7 +104,7 @@ public class Cliente_PF extends Cliente{
 		int numeroCarros, String nome, String endereco, String educacao, String genero, String classeEconomica) {
 		/*Funcao de cadastrar clientes do tipo PF*/
 		
-		Date dataFundacao = null;
+		Date dataNascimento = null;
 		
 		if(validarCPF(cpf)) {
 			
@@ -114,7 +114,7 @@ public class Cliente_PF extends Cliente{
 					
 			try {
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-				dataFundacao = formatter.parse(dataNascimentoTexto);
+				dataNascimento = formatter.parse(dataNascimentoTexto);
 						
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
