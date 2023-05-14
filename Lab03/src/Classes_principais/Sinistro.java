@@ -10,7 +10,10 @@ public class Sinistro{
 	private Veiculo veiculo;
 	private Cliente cliente;
 
+<<<<<<< HEAD
 	//Contrutores
+=======
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	public Sinistro(int id, String data, String endereco, Seguradora seguradora, Veiculo veiculo, Cliente cliente) {
 		super();
 		this.id = geraId();
@@ -21,6 +24,7 @@ public class Sinistro{
 		this.cliente = cliente;
 	}
 	
+<<<<<<< HEAD
 	public Sinistro() {
 		this.id = 0;
 		
@@ -29,12 +33,20 @@ public class Sinistro{
 	private int geraId() {
 		/*Funcao que gera os ids*/
 		
+=======
+	/*Verificar essa funcao depois*/
+	private int geraId() {
+	
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 		id_gerado = id_gerado+1;
 		return id_gerado;
 		
 	}
 
+<<<<<<< HEAD
 	//Getters e setters
+=======
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	public static int getId_gerado() {
 		return id_gerado;
 	}
@@ -90,12 +102,21 @@ public class Sinistro{
 	@Override
 	public String toString() {
 		return "Dados do sinistro:\n"
+<<<<<<< HEAD
 				+ "ID: "+getId()+"\n"
 				+ "Data: "+getData()+"\n"
 				+ "Endereco: "+getEndereco()+"\n"
 				+ "Seguradora: "+getSeguradora().getNome()+"\n"
 				+ "Veiculo: "+getVeiculo().getModelo()+"\n"
 				+ "Cliente: "+getCliente().getNome()+"\n";
+=======
+				+ "ID: "+id+"\n"
+				+ "Data: "+data+"\n"
+				+ "Endereco: "+endereco+"\n"
+				+ "Seguradora: "+seguradora+"\n"
+				+ "Veiculo: "+veiculo+"\n"
+				+ "Cliente: "+cliente.getNome()+"\n";
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	}
 
 }

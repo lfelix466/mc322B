@@ -1,5 +1,9 @@
 package Classes_principais;
 
+<<<<<<< HEAD
+=======
+import java.util.Scanner;
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,10 +11,18 @@ import java.util.Date;
 
 public class Cliente_PF extends Cliente{
 
+<<<<<<< HEAD
 	private final String cpf;
 	private Date dataNascimento;
 	
 	//Construtores
+=======
+	private String cpf;
+	private Date dataNascimento;
+	private Scanner entrada = new Scanner(System.in);
+
+
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	public Cliente_PF(String nome, String endereco, Date dataLicensa, String educacao, String genero,
 			String classeEconomica, ArrayList<Veiculo> listaVeiculos, String cpf, Date dataNascimento) {
 		super(nome, endereco, dataLicensa, educacao, genero, classeEconomica, listaVeiculos);
@@ -18,12 +30,67 @@ public class Cliente_PF extends Cliente{
 		this.dataNascimento = dataNascimento;
 	}
 
+<<<<<<< HEAD
 	public Cliente_PF(String cpf) {
 		this.cpf = cpf;
 	}
 	
 	private boolean verificaDigitoCPF(String cpf) {
 		/*Funcao de verifica se os digitos sao validos*/
+=======
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+
+
+	public String getCpf() {
+		return cpf;
+	}
+
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+
+	
+	@Override
+	public String toString() {
+		
+		String veiculos = "";
+		
+		for(int i = 0; i<getListaVeiculos().size(); i++) {
+			
+			veiculos = veiculos + getListaVeiculos().get(i);
+			veiculos = veiculos + "\n";
+		}
+		
+		return "Informações do cliente:\n"
+				+ "Tipo: PJ\n"
+				+ "Nome:"+getNome()+"\n"
+				+ "CPF:"+getCpf()+"\n"
+				+ "Endereco:"+getEndereco()+"\n"
+				+ "Data da licensa:"+getDataLicensa()+"\n"
+				+ "Educacao:"+getEducacao()+"\n"
+				+ "Genero:"+getGenero()+"\n"
+				+ "Classe econonmica:"+getClasseEconomica()+"\n"
+				+ "Data de nascimento:"+getDataNascimento()+"\n"
+				+ "Quantidade de veiculos:"+getListaVeiculos().size()+"\n"
+				+ veiculos;
+	}
+
+
+	private boolean verificaDigitoCPF(String cpf) {
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 		int dig1, dig2, valor1 = 0, valor2 = 0;
 
 		for(int i = 0; i < 9; i++) {
@@ -62,7 +129,11 @@ public class Cliente_PF extends Cliente{
 	}
 
 	public boolean validarCPF(String cpf) {
+<<<<<<< HEAD
 		/*Funcao que verifica se o cpf e valido*/
+=======
+
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 		cpf = cpf.replaceAll("[^0-9]+", "");
 
 		char texto1 = 0, texto2;
@@ -100,6 +171,7 @@ public class Cliente_PF extends Cliente{
 		return true;
 	}
 
+<<<<<<< HEAD
 	public boolean CadastrarCliente(Seguradora seguradora, String cpf, String dataNascimentoTexto, String dataLicensaTexto,
 		int numeroCarros, String nome, String endereco, String educacao, String genero, String classeEconomica) {
 		/*Funcao de cadastrar clientes do tipo PF*/
@@ -116,11 +188,31 @@ public class Cliente_PF extends Cliente{
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 				dataNascimento = formatter.parse(dataNascimentoTexto);
 						
+=======
+	public boolean CadastrarCliente(Seguradora seguradora) {
+		
+		String cpf;
+		cpf = entrada.nextLine();
+		
+		if(validarCPF(cpf)) {
+		
+			Cliente_PF cliente_aux = new Cliente_PF(null, null, null, null, null, null, null, cpf, null);
+			
+			Date dataNascimento = null;
+			
+			try {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				
+				System.out.println("Digite a data de nascimento do cliente:");
+				dataNascimento = formatter.parse(entrada.nextLine());
+				
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
+<<<<<<< HEAD
 					
 			cliente_aux.setDataNascimento(dataNascimento); 
 				
@@ -171,6 +263,23 @@ public class Cliente_PF extends Cliente{
 				+ "Data de nascimento:"+getDataNascimento()+"\n"
 				+ "Quantidade de veiculos:"+getListaVeiculos().size()+"\n"
 				+ veiculos;
+=======
+			
+			cliente_aux.setDataNascimento(dataNascimento);
+			
+			seguradora.cadastrarCliente(cliente_aux);
+			
+			return true;
+			
+		}else {
+			
+			System.out.println("CPF não e valido!");
+			
+		}
+		
+		return false;
+	
+>>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	}
 
 }
