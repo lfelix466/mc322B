@@ -1,9 +1,0 @@
-package Utilidades;
-
-import java.util.Scanner;
-
-public class Entradas {
-	
-	static Scanner entrada = new Scanner(System.in);
-
-}
