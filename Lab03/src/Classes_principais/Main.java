@@ -1,10 +1,6 @@
 package Classes_principais;
 
 import java.util.Scanner;
-<<<<<<< HEAD
-=======
-
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 import Utillidades.MenuInicial;
 
 public class Main {
@@ -12,7 +8,6 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-<<<<<<< HEAD
 		//Inicializacao das variaveis
 		int opcao;
 		String nome;
@@ -110,50 +105,6 @@ public class Main {
 					
 					System.out.println("Opcao nao existente");
 					
-=======
-		//Inicializacao dos contrutores
-		
-		int opcao;
-		
-		MenuInicial menu = new MenuInicial();
-		Scanner entrada = new Scanner(System.in);
-		
-		Seguradora seguradora = new Seguradora(null, null, null, null, null, null);
-		Cliente cliente = new Cliente(null, null, null, null, null, null, null);
-		
-		/*
-		System.out.println("Digite o nome da seguradora");
-		seguradora.setNome(entrada.nextLine());
-		System.out.println("Digite o telefone da seguradora");
-		seguradora.setTelefone(entrada.nextLine());
-		System.out.println("Digite o Email da seguradora");
-		seguradora.setEmail(entrada.nextLine());
-		System.out.println("Digite o Endereco da seguradora");
-		seguradora.setEndereco(entrada.nextLine());
-		*/
-		
-		do {
-			
-			System.out.println(menu.toString());
-			
-			opcao = entrada.nextInt();
-			System.out.println(opcao);
-			
-			if(opcao == 1) {
-			
-				if(seguradora.gerarSinitro()) {
-					System.out.println("Sinistro gerado com sucesso!");
-				}else {
-					System.out.println("Falha ao gerar sinistro!");
-				}
-				
-			}else if(opcao == 2) {
-				
-				if(seguradora.cadastrarCliente(cliente)) {
-					System.out.println("Cliente cadastrado!");
-				}else {
-					System.out.println("Cliente nao cadastrado!");
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 				}
 				
 			}else if(opcao == 3) {
@@ -162,7 +113,6 @@ public class Main {
 				
 			}else if(opcao == 4) {
 				
-<<<<<<< HEAD
 				System.out.println("Qual tipo de cliente deseja verificar?\n"
 						+ "1 - PF\n"
 						+ "2 - PJ");
@@ -180,12 +130,6 @@ public class Main {
 				
 			}else if(opcao == 5) {
 				
-=======
-				seguradora.listarClientes("teste");
-				
-			}else if(opcao == 5) {
-				entrada.nextLine();
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 				System.out.println("Qual o nome do cliente que deseja ver os dados?");
 				
 				if(!seguradora.visualizarCliente(entrada.nextLine())) {
@@ -195,29 +139,17 @@ public class Main {
 				
 			}else if(opcao == 6) {
 				System.out.println("Qual o nome do cliente que deseja ver o sinistro?");
-<<<<<<< HEAD
 				nome = entrada.nextLine();
 				
 				if(!seguradora.visualizarSinistro(nome)) {
-=======
-				
-				if(!seguradora.visualizarSinistro(entrada.nextLine())) {
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 					System.out.println("Sinistro nao encontrado!");
 				}
 				
 			}else if(opcao == 7) {
-<<<<<<< HEAD
 				System.out.println("Qual o nome do cliente que deseja remover?");
 				nome = entrada.nextLine();
 				
 				if(seguradora.removerCliente(nome)) {
-=======
-				entrada.nextLine();
-				System.out.println("Qual o nome do cliente que deseja remover?");
-				
-				if(seguradora.removerCliente(entrada.nextLine())) {
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 					System.out.println("Cliente removido com sucesso!");
 				}else {
 					System.out.println("Cliente nao encontrado!");
@@ -225,10 +157,7 @@ public class Main {
 			
 		}while(opcao != 8);
 		
-<<<<<<< HEAD
 		entrada.close();
-=======
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 		System.out.println("Saiu");
 	}
 }

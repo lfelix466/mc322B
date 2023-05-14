@@ -1,10 +1,7 @@
 package Classes_principais;
 
-<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-=======
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +16,7 @@ public class Cliente{
 	private String classeEconomica;
 	private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
 	
-<<<<<<< HEAD
 	//Contrutores
-=======
-	
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	public Cliente(String nome, String endereco, Date dataLicensa, String educacao, String genero,
 			String classeEconomica, ArrayList<Veiculo> listaVeiculos) {
 		super();
@@ -35,7 +28,6 @@ public class Cliente{
 		this.classeEconomica = classeEconomica;
 		this.listaVeiculos.add(null);
 	}
-<<<<<<< HEAD
 	
 	public Cliente() {
 		
@@ -73,10 +65,6 @@ public class Cliente{
 	}
 
 	//Getters e setters
-=======
-
-
->>>>>>> 600e24fb983042bbc545a10310ff68d0c1ac2b63
 	public String getNome() {
 		return nome;
 	}

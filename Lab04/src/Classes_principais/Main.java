@@ -84,6 +84,5 @@ public class Main {
 		// Chamada ddo menu principal
 		Menu menu = new Menu();
 		menu.menu_principal(listaSeguradora);
-		System.out.println("Saiu");
 	}
 }

@@ -117,7 +117,7 @@ public class Menu {
 					break;
 
 				case SAIR:
-					System.out.println("Sair");
+					System.out.println("Saiu");
 					break;
 				default:
 					System.out.println("Opcao invalida!");
