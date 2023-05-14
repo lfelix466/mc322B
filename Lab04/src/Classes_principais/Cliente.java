@@ -131,7 +131,7 @@ public class Cliente {
 			return false;
 		} else {
 			for (int i = 0; i < listaVeiculos.size(); i++) {
-				System.out.println("\n" + i + " - " + listaVeiculos.get(i).toString());
+				System.out.println(listaVeiculos.get(i).toString());
 			}
 		}
 		return true;

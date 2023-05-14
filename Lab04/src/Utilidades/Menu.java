@@ -27,15 +27,15 @@ public class Menu {
 
 	private void opcaoEscolhida(ArrayList<Seguradora> listaSeguradora) {
 		/* Funcao que mostra a seguradora e o cliente escolhido */
-
-		System.out.println("SEGURADORA: " + listaSeguradora.get(seguradoraEscolhida).getNome());
+		
+		System.out.println("\nSEGURADORA: " + listaSeguradora.get(seguradoraEscolhida).getNome());
 		if (clienteEscolhido != -1) {
 			System.out.println("CLIENTE: "
 					+ listaSeguradora.get(seguradoraEscolhida).getListaClientes().get(clienteEscolhido).getNome());
 		} else {
 			System.out.println("CLIENTE: Nao ha clientes nessa seguradora!");
 		}
-		System.out.println("Digite a opcao desejada:");
+		System.out.println("\nDigite a opcao desejada:");
 	}
 
 	public void menu_principal(ArrayList<Seguradora> listaSeguradora) {
@@ -83,14 +83,14 @@ public class Menu {
 					resultado = Seguradora.encontraSeguradora(listaSeguradora, nomeSeguradora);
 
 					if (resultado == "Falso") {
-						System.out.println("Seguradora nao encontrada!");
+						System.out.println("znSeguradora nao encontrada!");
 					} else {
 						seguradoraEscolhida = Integer.parseInt(resultado);
-						System.out.println("Seguradora trocada com sucesso!");
+						System.out.println("\nSeguradora trocada com sucesso!");
 						if (listaSeguradora.get(seguradoraEscolhida).getListaClientes().isEmpty()) {
 							clienteEscolhido = -1;
 						} else {
-							System.out.println("Cliente trocado com sucesso!");
+							System.out.println("\nCliente trocado com sucesso!");
 							clienteEscolhido = 0;
 						}
 					}
@@ -107,10 +107,10 @@ public class Menu {
 						resultado = Seguradora.encontraCliente(listaSeguradora, seguradoraEscolhida, nomeCliente);
 
 						if (resultado == "Falso") {
-							System.out.println("Cliente nao encontrado!");
+							System.out.println("\nCliente nao encontrado!");
 						} else {
 							clienteEscolhido = Integer.parseInt(resultado);
-							System.out.println("Cliente trocado com sucesso!");
+							System.out.println("znCliente trocado com sucesso!");
 						}
 					}
 

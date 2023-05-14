@@ -87,7 +87,7 @@ public class Seguradora {
 	public static void listarSeguradoras(ArrayList<Seguradora> listaSeguradora) {
 		/* Funcao que lista as seguradoras cadastradas */
 		for (int i = 0; i < listaSeguradora.size(); i++) {
-			System.out.println("\n" + i + " - Nome da seguadora: " + listaSeguradora.get(i).getNome() + "\n");
+			System.out.println(i + " - Nome da seguadora: " + listaSeguradora.get(i).getNome() + "\n");
 		}
 	}
 
@@ -233,9 +233,7 @@ public class Seguradora {
 			for (int i = 0; i < listaClientes.size(); i++) {
 				if (listaClientes.get(i).listarVeiculo(1)) {
 					aux = 1;
-				}
-			}
-		}
+		}}}
 
 		if (aux == 0) {
 			System.out.println("Essa seguradora nao possui veiculos cadastrados!");
