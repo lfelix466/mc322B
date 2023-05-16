@@ -70,7 +70,7 @@ public class Menu {
 					break;
 
 				case TRANSFERIR_SEGURO:
-					Sinistro.transferirSeguro(listaSeguradora, seguradoraEscolhida, clienteEscolhido);
+					Seguradora.transferirSeguro(listaSeguradora, seguradoraEscolhida, clienteEscolhido);
 					break;
 				case CALCULAR_RECEITA:
 					listaSeguradora.get(seguradoraEscolhida).calcularReceita();
@@ -323,10 +323,7 @@ public class Menu {
 							"", "")) {
 						if (clienteEscolhido == -1) {
 							clienteEscolhido = 0;
-						}
-						listaSeguradora.get(seguradoraEscolhida).calcularPrecoSeguroCliente(
-								(listaSeguradora.get(seguradoraEscolhida).getListaClientes().get(clienteEscolhido)));
-					}
+					}}
 
 					break;
 				case CLIENTE_PJ:
@@ -334,10 +331,8 @@ public class Menu {
 							"", "")) {
 						if (clienteEscolhido == -1) {
 							clienteEscolhido = 0;
-						}
-						listaSeguradora.get(seguradoraEscolhida).calcularPrecoSeguroCliente(
-								(listaSeguradora.get(seguradoraEscolhida).getListaClientes().get(clienteEscolhido)));
-					}
+					}}
+					
 					break;
 				case VOLTAR:
 					break;

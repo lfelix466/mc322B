@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import Utilidades.Entradas;
 
-public class Cliente {
+public abstract class Cliente {
 
 	private String nome;
 	private String endereco;
@@ -31,7 +31,6 @@ public class Cliente {
 		this.educacao = educacao;
 		this.genero = genero;
 		this.classeEconomica = classeEconomica;
-		this.valorSeguro = valorSeguro;
 	}
 
 	public Cliente() {
@@ -104,6 +103,7 @@ public class Cliente {
 		this.educacao = educacao;
 		this.genero = genero;
 		this.classeEconomica = classeEconomica;
+		this.valorSeguro = (double) 0;
 
 		return true;
 	}
@@ -152,6 +152,8 @@ public class Cliente {
 		System.out.println("Nenhum veiculo desse cliente possui essa placa!");
 		return false;
 	}
+	
+	public abstract Double calculaScore();
 
 	// Getters e setters
 	public String getNome() {

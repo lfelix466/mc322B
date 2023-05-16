@@ -108,8 +108,9 @@ public class Seguradora {
 			System.out.println("Clientes:");
 
 			for (int i = 0; i < listaClientes.size(); i++) {
+				aux++;
 				if (listaClientes.get(i).getClass().getSimpleName().equals(tipoCliente)) {
-					System.out.println(i + " - " + listaClientes.get(i).getNome());
+					System.out.println(aux + " - " + listaClientes.get(i).getNome());
 					aux = 1;
 				}
 			}
@@ -152,15 +153,9 @@ public class Seguradora {
 			}
 		}
 
-		if (cliente.getClass().getSimpleName().equals("Cliente_PF")) {
-			Cliente_PF cliente_aux = (Cliente_PF) cliente;
-			valor = cliente_aux.calculaScore() * (1 + quantidade_de_sinistros);
-
-		} else {
-			Cliente_PJ cliente_aux = (Cliente_PJ) cliente;
-			valor = cliente_aux.calculaScore() * (1 + quantidade_de_sinistros);
-		}
+		valor = cliente.calculaScore() * (1 + quantidade_de_sinistros);
 		cliente.setValorSeguro(valor);
+		
 		return valor;
 	}
 
@@ -265,6 +260,90 @@ public class Seguradora {
 			}
 		}
 
+		return false;
+	}
+	
+	public static boolean transferirSeguro(ArrayList<Seguradora> listaSeguros, int indiceSeguro, int indiceCliente) {
+		/* Funcao que transfere os veiculos dos clientes */
+		String nome, resultado = "", opcao = "";
+		int indiceSeguro2 = 0, indiceCliente2 = 0, aux = 0;
+		Scanner entrada = Entradas.entrada;
+
+		System.out.println("Qual o outro cliente?");
+
+		nome = entrada.nextLine();
+		
+		if(nome.equals(listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getNome())) {
+			System.out.println("Nao se pode transferir o seguro para ele mesmo!");
+		}else {
+			
+			if (!Validacao.verificaNome(nome)) {
+				System.out.println("Nome invalido!");
+				return false;
+			}
+
+			for (int i = 0; i < listaSeguros.size(); i++) {
+
+				resultado = Seguradora.encontraCliente(listaSeguros, i, nome);
+				if (resultado != "Falso") {
+					indiceSeguro2 = i;
+					indiceCliente2 = Integer.parseInt(resultado);
+					aux = 1;
+					break;
+				}
+			}
+
+			if (aux == 0) {
+				System.out.println("Cliente nao econtrado");
+				return false;
+			}
+
+			System.out.println("0 - Transferir o seguro de '"
+					+ listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getNome() + "' para '"
+					+ listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getNome() + "'?");
+			System.out.println("1 - Transferir o seguro de '"
+					+ listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getNome() + "' para '"
+					+ listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getNome() + "'?");
+			System.out.println("Digite a opcao desejada:");
+			opcao = entrada.nextLine();
+
+			// Verifica a ordem de transferencia escolhida
+			if (opcao.equals("0")) {
+				for (int i = listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().size()
+						- 1; i >= 0; i--) {
+
+					listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos().add(
+							listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().get(i));
+
+					listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().remove(i);
+				}
+
+			} else if (opcao.equals("1")) {
+				for (int i = listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos()
+						.size() - 1; i >= 0; i--) {
+
+					listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().add(listaSeguros
+							.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos().get(i));
+
+					listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos().remove(i);
+				}
+
+			} else {
+				System.out.println("Opcao inexistente");
+				return false;
+			}
+
+			// Calcula os novos valores para os clientes
+			listaSeguros.get(indiceSeguro)
+					.calcularPrecoSeguroCliente((listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente)));
+			listaSeguros.get(indiceSeguro2)
+					.calcularPrecoSeguroCliente((listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2)));
+
+			System.out.println("Seguradora transferida com sucesso!");
+			return true;
+			
+		}
+		
 		return false;
 	}
 

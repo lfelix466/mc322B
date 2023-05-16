@@ -17,10 +17,8 @@ public class Main {
 		Cliente_PJ cliente_pj = new Cliente_PJ("0");
 		Veiculo veiculo1 = new Veiculo();
 		Veiculo veiculo2 = new Veiculo();
-		Cliente cliente1 = new Cliente();
-		Cliente cliente2 = new Cliente();
-		Sinistro sinistro1 = new Sinistro("teste1", "teste1", seguradora, veiculo1, cliente1);
-		Sinistro sinistro2 = new Sinistro("teste2", "teste2", seguradora, veiculo2, cliente2);
+		Sinistro sinistro1 = new Sinistro("teste1", "teste1", seguradora, veiculo1, cliente_pf);
+		Sinistro sinistro2 = new Sinistro("teste2", "teste2", seguradora, veiculo2, cliente_pj);
 		seguradora.cadastrarSeguradora("Seguradora", "111111", "segurado.com", "endereco");
 		listaSeguradora.add(seguradora);
 
