@@ -110,7 +110,7 @@ public class Condutor {
 		condutor_Aux.setEndereco(endereco);
 		condutor_Aux.setTelefone(telefone);
 		
-		seguro.
+		//seguro.
 
 		System.out.println("Condutor cadastrado com sucesso!");
 		return true;

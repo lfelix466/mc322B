@@ -79,7 +79,7 @@ public class Seguro {
 		seguro_Aux.setDataInicio(dataInicio);;
 		seguro_Aux.setSeguradora(seguradora);
 		seguro_Aux.setDataFim(dataFim);
-		seguradora.
+		//seguradora.
 		
 		System.out.println("Seguro cadastrado com sucesso!");
 		return true;
