@@ -79,21 +79,8 @@ public class Cliente_PF extends Cliente {
 		return true;
 	}
 
-	public Double calculaScore() {
-		/* Funcao que calcula score do cliente PF */
-
-		double valor = 0;
-		int idade = calculaIdade(dataNascimento);
-
-		if (idade <= 30) {
-			valor = CalcSeguro.VALOR_BASE.getValor() * CalcSeguro.FATOR_18_30.getValor() * getListaVeiculos().size();
-		} else if (idade <= 60) {
-			valor = CalcSeguro.VALOR_BASE.getValor() * CalcSeguro.FATOR_30_60.getValor() * getListaVeiculos().size();
-		} else {
-			valor = CalcSeguro.VALOR_BASE.getValor() * CalcSeguro.FATOR_60_90.getValor() * getListaVeiculos().size();
-		}
-		return valor;
-	}
+	
+	
 
 	public int calculaIdade(Date data) {
 		/* Funcao que retorna a idade do cliente baseado no ano de nascimento */

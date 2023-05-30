@@ -1,6 +1,9 @@
 package Classes_principais;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import Utilidades.Entradas;
@@ -9,84 +12,85 @@ public class Sinistro {
 
 	static int id_gerado = 0;
 	private final int id;
-	private String data;
+	private Date data;
 	private String endereco;
-	private Seguradora seguradora;
-	private Veiculo veiculo;
-	private Cliente cliente;
-	Scanner entrada = Entradas.entrada;
+	private Condutor condutor;
+	private Date dataNasc; 
+	private Seguro seguro;
 
-	// Contrutores
-	public Sinistro(String data, String endereco, Seguradora seguradora, Veiculo veiculo, Cliente cliente) {
-		super();
+	public Sinistro(int id, Date data, String endereco, Condutor condutor, Date dataNasc, Seguro seguro) {
 		this.id = geraId();
 		this.data = data;
 		this.endereco = endereco;
-		this.seguradora = seguradora;
-		this.veiculo = veiculo;
-		this.cliente = cliente;
+		this.condutor = condutor;
+		this.dataNasc = dataNasc;
+		this.seguro = seguro;
 	}
-
+	
 	public Sinistro() {
-		this.id = 0;
+		this.id = geraId();
 	}
 
-	public static boolean gerarSinistro(ArrayList<Seguradora> listaSeguradora, String data, String endereco,
-			int seguradoraIndice, String veiculoPlaca, int clienteIndice) {
+	public static boolean gerarSinistro(Seguro seguro, String dataTexto, String endereco,
+			Condutor condutor, String dataNascTexto) {
 		/*
 		 * Funcao que cria e adiciona valores na seguradora e adiciona eles na
 		 * seguradora escolhida
 		 */
 
-		int indiceVe = 0, aux = 0;
-
 		Scanner entrada = Entradas.entrada;
+		
+		if (dataTexto == "") {
 
-		System.out.print("Veiculos do cliente:");
-		if (listaSeguradora.get(seguradoraIndice).getListaClientes().get(clienteIndice).listarVeiculo(aux)) {
+			System.out.println("Digite a data do sinistro");
+			dataTexto = entrada.nextLine();
 
-			if (veiculoPlaca == "") {
-				System.out.println("Digite a placa do veiculo");
-				veiculoPlaca = entrada.nextLine();
-			}
-			for (int i = 0; i < listaSeguradora.get(seguradoraIndice).getListaClientes().get(clienteIndice)
-					.getListaVeiculos().size(); i++) {
-
-				if (listaSeguradora.get(seguradoraIndice).getListaClientes().get(clienteIndice).getListaVeiculos()
-						.get(i).getPlaca().equals(veiculoPlaca)) {
-					aux = 1;
-					indiceVe = i;
-					break;
-				}
-			}
-
-			if (aux == 0) {
-				System.out.println("Veiculo nao econtrado no cliente");
+			if (!Validacao.verificaData(dataTexto)) {
+				System.out.println("Data invalida!");
 				return false;
-			} else {
-				if (data == "") {
-					System.out.println("Digite a data");
-					data = entrada.nextLine();
-
-					System.out.println("Digite o endereco");
-					endereco = entrada.nextLine();
-
-					if (!Validacao.verificaNome(endereco)) {
-						System.out.println("Endereco invalido!");
-					}
-				}
-
-				listaSeguradora.get(seguradoraIndice).gerarSinitro(data, endereco,
-						listaSeguradora.get(seguradoraIndice),
-						listaSeguradora.get(seguradoraIndice).getListaClientes().get(clienteIndice).getListaVeiculos()
-								.get(indiceVe),
-						listaSeguradora.get(seguradoraIndice).getListaClientes().get(clienteIndice));
-
-				System.out.println("Sinistro gerado com sucesso!");
 			}
-			return true;
+
+			System.out.println("Digite a data de nascimento do condutor");
+			dataNascTexto = entrada.nextLine();
+
+			if (!Validacao.verificaData(dataNascTexto)) {
+				System.out.println("Data invalida!");
+				return false;
+			}
+
+			System.out.println("Digite o endereco do sinistro");
+			endereco = entrada.nextLine();
+
+			if (!Validacao.verificaNome(endereco)) {
+				System.out.println("Endereco invalido!");
+				return false;
+			}
+			
 		}
-		return false;
+
+		Date dataNasc, data;
+
+		Sinistro sinistro = new Sinistro();
+		
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			dataNasc = formatter.parse(dataNascTexto);
+			data = formatter.parse(dataNascTexto);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		sinistro.setCondutor(condutor);
+		sinistro.setData(data);
+		sinistro.setDataNasc(dataNasc);
+		sinistro.setEndereco(endereco);
+		
+		condutor.adicionarSinistro(sinistro);
+		seguro.getListaSinistros().add(sinistro);
+		return true;
 	}
 
 	public static boolean listarSinistros(ArrayList<Seguradora> listaSeguradora) {
@@ -142,7 +146,6 @@ public class Sinistro {
 		return id_gerado;
 	}
 
-	// Getters e setters
 	public static int getId_gerado() {
 		return id_gerado;
 	}
@@ -151,11 +154,11 @@ public class Sinistro {
 		Sinistro.id_gerado = id_gerado;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
@@ -167,28 +170,28 @@ public class Sinistro {
 		this.endereco = endereco;
 	}
 
-	public Seguradora getSeguradora() {
-		return seguradora;
+	public Condutor getCondutor() {
+		return condutor;
 	}
 
-	public void setSeguradora(Seguradora seguradora) {
-		this.seguradora = seguradora;
+	public void setCondutor(Condutor condutor) {
+		this.condutor = condutor;
 	}
 
-	public Veiculo getVeiculo() {
-		return veiculo;
+	public Date getDataNasc() {
+		return dataNasc;
 	}
 
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
+	public void setDataNasc(Date dataNasc) {
+		this.dataNasc = dataNasc;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Seguro getSeguro() {
+		return seguro;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setSeguro(Seguro seguro) {
+		this.seguro = seguro;
 	}
 
 	public int getId() {
@@ -197,8 +200,13 @@ public class Sinistro {
 
 	@Override
 	public String toString() {
-		return "Dados do sinistro:\n" + "ID: " + getId() + "\n" + "Data: " + getData() + "\n" + "Endereco: "
-				+ getEndereco() + "\n" + "Seguradora: " + getSeguradora().getNome() + "\n" + "Veiculo: "
-				+ getVeiculo().getModelo() + "\n" + "Cliente: " + getCliente().getNome() + "\n";
+		return "Dados do sinistro\n"
+				+"Id:"+id+"\n"
+					+"Data:"+data+"\n"
+						+"Endereco:"+endereco+"\n"
+							+"Condutor:"+condutor+"\n"
+								+"Data de nascimento:"+dataNasc+"\n"
+									+"Seguro:"+seguro;
 	}
+
 }

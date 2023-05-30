@@ -21,7 +21,7 @@ public class Condutor {
 	Scanner entrada = Entradas.entrada;
 	
 	public Condutor(String cpf, String nome, String telefone, String endereco, String email, Date dataNasc,
-			ArrayList<Sinistro> listaSinistros, Scanner entrada) {
+			ArrayList<Sinistro> listaSinistros) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -29,7 +29,6 @@ public class Condutor {
 		this.email = email;
 		this.dataNasc = dataNasc;
 		this.listaSinistros = listaSinistros;
-		this.entrada = entrada;
 	}
 	
 	public Condutor(String cpf) {
@@ -109,15 +108,16 @@ public class Condutor {
 		condutor_Aux.setEmail(email);
 		condutor_Aux.setEndereco(endereco);
 		condutor_Aux.setTelefone(telefone);
-		
-		//seguro.
+		seguro.autorizarCondutor(condutor_Aux);
 
 		System.out.println("Condutor cadastrado com sucesso!");
 		return true;
 	}	
 	
-	public boolean adicionarSinistro() {
+	public boolean adicionarSinistro(Sinistro sinistro) {
 		
+		listaSinistros.add(sinistro);
+		System.out.println("Sinistro adicionado ao condutor com sucesso !");
 		
 		return true;
 	}

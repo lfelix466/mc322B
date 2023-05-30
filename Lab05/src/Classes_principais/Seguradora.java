@@ -1,41 +1,53 @@
 package Classes_principais;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Utilidades.Entradas;
 
-import java.util.List;
-
 public class Seguradora {
 
+	private final String cnpj;
 	private String nome;
 	private String telefone;
-	private String email;
 	private String endereco;
-	private ArrayList<Sinistro> listaSinistro = new ArrayList<Sinistro>();
-	private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+	private String email;
+	ArrayList<Cliente> listaClientes;
+	ArrayList<Seguro> listaSeguros;
 
-	Scanner entrada = Entradas.entrada;
-
-	// Construtor
-	public Seguradora(String nome, String telefone, String email, String endereco, ArrayList<Sinistro> listaSinistro,
-			ArrayList<Cliente> listaClientes) {
+	public Seguradora(String cnpj, String nome, String telefone, String endereco, String email,
+			ArrayList<Cliente> listaClientes, ArrayList<Seguro> listaSeguros) {
 		super();
+		this.cnpj = cnpj;
 		this.nome = nome;
 		this.telefone = telefone;
-		this.email = email;
 		this.endereco = endereco;
+		this.email = email;
+		this.listaClientes = listaClientes;
+		this.listaSeguros = listaSeguros;
 	}
-
-	public Seguradora() {
-
+	
+	public Seguradora(String cnpj) {
+		this.cnpj = cnpj;
 	}
-
-	public boolean cadastrarSeguradora(String nome, String telefone, String email, String endereco) {
+	
+	
+	public static boolean cadastrarSeguradora(ArrayList<Seguradora> listaSeguradoras, String cpf, String nome,
+			String telefone, String endereco, String email) {
 		/* Funcao que adiciona os valores em cada seguradora */
-		if (nome == "") {
 
+		Scanner entrada = Entradas.entrada;
+		
+		if (cpf == "") {
+
+			System.out.println("Digite o cpf da seguradora");
+			cpf = entrada.nextLine();
+			if (!Validacao.validarCPF(cpf)) {
+				System.out.println("CPF invalido");
+				return false;
+			}
+			
 			System.out.println("Digite o nome da seguradora");
 			nome = entrada.nextLine();
 			if (!Validacao.verificaNome(nome)) {
@@ -65,10 +77,13 @@ public class Seguradora {
 			}
 		}
 
-		this.nome = nome;
-		this.telefone = telefone;
-		this.email = email;
-		this.endereco = endereco;
+		Seguradora seguradora = new Seguradora(cpf);
+		seguradora.setNome(nome);
+		seguradora.setEmail(email);
+		seguradora.setEndereco(endereco);
+		
+		listaSeguradoras.add(seguradora);
+		//////////////////////////
 
 		return true;
 	}
@@ -216,137 +231,6 @@ public class Seguradora {
 		return true;
 	}
 
-	public boolean listarVeiculos() {
-		/* Funcao que lista todos os veiculos dos clientes que a seguradora possui */
-		int aux = 0;
-
-		if (listaClientes.size() == 0) {
-			System.out.println("Essa seguradora nao possui clientes cadastrados");
-			return false;
-
-		} else {
-			for (int i = 0; i < listaClientes.size(); i++) {
-				if (listaClientes.get(i).listarVeiculo(1)) {
-					aux = 1;
-		}}}
-
-		if (aux == 0) {
-			System.out.println("Essa seguradora nao possui veiculos cadastrados!");
-			return false;
-		}
-		return true;
-	}
-
-	public boolean gerarSinitro(String dataSinistro, String endereco, Seguradora seguradora, Veiculo veiculo,
-			Cliente cliente) {
-		/* Funcao que gera sinistros e os adiciona na lista */
-
-		Sinistro sinistro = new Sinistro(dataSinistro, endereco, seguradora, veiculo, cliente);
-		listaSinistro.add(sinistro);
-		return true;
-	}
-
-	public boolean visualizarSinistro(String cliente) {
-		/* Funcao que visisualiza os sinistros do cliente presentes na seguradora */
-
-		if (listaSinistro.isEmpty()) {
-			System.out.println("Nenhum sinistro cadastrado nessa seguradora!");
-		} else {
-			for (int i = 0; i < listaSinistro.size(); i++) {
-				if (listaSinistro.get(i).getCliente().getNome().equals(cliente)) {
-					System.out.println(listaSinistro.get(i));
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-	
-	public static boolean transferirSeguro(ArrayList<Seguradora> listaSeguros, int indiceSeguro, int indiceCliente) {
-		/* Funcao que transfere os veiculos dos clientes */
-		String nome, resultado = "", opcao = "";
-		int indiceSeguro2 = 0, indiceCliente2 = 0, aux = 0;
-		Scanner entrada = Entradas.entrada;
-
-		System.out.println("Qual o outro cliente?");
-
-		nome = entrada.nextLine();
-		
-		if(nome.equals(listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getNome())) {
-			System.out.println("Nao se pode transferir o seguro para ele mesmo!");
-		}else {
-			
-			if (!Validacao.verificaNome(nome)) {
-				System.out.println("Nome invalido!");
-				return false;
-			}
-
-			for (int i = 0; i < listaSeguros.size(); i++) {
-
-				resultado = Seguradora.encontraCliente(listaSeguros, i, nome);
-				if (resultado != "Falso") {
-					indiceSeguro2 = i;
-					indiceCliente2 = Integer.parseInt(resultado);
-					aux = 1;
-					break;
-				}
-			}
-
-			if (aux == 0) {
-				System.out.println("Cliente nao econtrado");
-				return false;
-			}
-
-			System.out.println("0 - Transferir o seguro de '"
-					+ listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getNome() + "' para '"
-					+ listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getNome() + "'?");
-			System.out.println("1 - Transferir o seguro de '"
-					+ listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getNome() + "' para '"
-					+ listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getNome() + "'?");
-			System.out.println("Digite a opcao desejada:");
-			opcao = entrada.nextLine();
-
-			// Verifica a ordem de transferencia escolhida
-			if (opcao.equals("0")) {
-				for (int i = listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().size()
-						- 1; i >= 0; i--) {
-
-					listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos().add(
-							listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().get(i));
-
-					listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().remove(i);
-				}
-
-			} else if (opcao.equals("1")) {
-				for (int i = listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos()
-						.size() - 1; i >= 0; i--) {
-
-					listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente).getListaVeiculos().add(listaSeguros
-							.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos().get(i));
-
-					listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2).getListaVeiculos().remove(i);
-				}
-
-			} else {
-				System.out.println("Opcao inexistente");
-				return false;
-			}
-
-			// Calcula os novos valores para os clientes
-			listaSeguros.get(indiceSeguro)
-					.calcularPrecoSeguroCliente((listaSeguros.get(indiceSeguro).getListaClientes().get(indiceCliente)));
-			listaSeguros.get(indiceSeguro2)
-					.calcularPrecoSeguroCliente((listaSeguros.get(indiceSeguro2).getListaClientes().get(indiceCliente2)));
-
-			System.out.println("Seguradora transferida com sucesso!");
-			return true;
-			
-		}
-		
-		return false;
-	}
-
 	public static String encontraSeguradora(ArrayList<Seguradora> listaSeguradora, String nome) {
 		/*
 		 * Funcao que retorna o indice da seguradora na listaSeguradoras de acordo com o
@@ -373,7 +257,6 @@ public class Seguradora {
 		return "Falso";
 	}
 
-	// getters e setters
 	public String getNome() {
 		return nome;
 	}
@@ -390,14 +273,6 @@ public class Seguradora {
 		this.telefone = telefone;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getEndereco() {
 		return endereco;
 	}
@@ -406,15 +281,15 @@ public class Seguradora {
 		this.endereco = endereco;
 	}
 
-	public List<Sinistro> getListaSinistro() {
-		return listaSinistro;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setListaSinistro(ArrayList<Sinistro> listaSinistro) {
-		this.listaSinistro = listaSinistro;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public List<Cliente> getListaClientes() {
+	public ArrayList<Cliente> getListaClientes() {
 		return listaClientes;
 	}
 
@@ -422,9 +297,36 @@ public class Seguradora {
 		this.listaClientes = listaClientes;
 	}
 
+	public ArrayList<Seguro> getListaSeguros() {
+		return listaSeguros;
+	}
+
+	public void setListaSeguros(ArrayList<Seguro> listaSeguros) {
+		this.listaSeguros = listaSeguros;
+	}
+
+	public Scanner getEntrada() {
+		return entrada;
+	}
+
+	public void setEntrada(Scanner entrada) {
+		this.entrada = entrada;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
 	@Override
 	public String toString() {
-		return "Seguradora [nome=" + nome + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco
-				+ ", listaSinistro=" + listaSinistro + ", listaClientes=" + listaClientes + "]";
+		return "Dados da seguradora\n"
+				+ "Cnpj:"+cnpj+"\n"
+					+"Nome:"+nome+"\n"
+						+"Telefone:"+telefone+"\n"
+							+"Endereco:"+endereco+"\n"
+								+"Email:"+email+"\n"
+									+"Lista de clientes:"+listaClientes+"\n"
+										+ "Lista de seguros:"+listaSeguros;
 	}
+		
 }

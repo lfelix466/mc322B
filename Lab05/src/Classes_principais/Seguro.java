@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import Utilidades.Entradas;
 
-public class Seguro {
+public abstract class Seguro {
 	
 	static int id_gerado = 0;
 	private final int id;
@@ -18,6 +18,7 @@ public class Seguro {
 	private ArrayList<Sinistro> listaSinistros;
 	private ArrayList<Condutor> listacondutores;
 	private int valorMensal;
+	Scanner entrada = Entradas.entrada;
 	
 	public Seguro(int id, Date dataInicio, Date dataFim, Seguradora seguradora, ArrayList<Sinistro> listaSinistros,
 			ArrayList<Condutor> listacondutores, int valorMensal) {
@@ -35,11 +36,8 @@ public class Seguro {
 		this.id = 0;
 	}
 	
-	public static boolean cadastrarSeguro(String dataFimTexto, String dataInicioTexto,
-			Seguradora seguradora) {
+	public boolean cadastraDadosSeguro(String dataFimTexto, String dataInicioTexto) {
 		/* Funcao atribui valores aos cliente do tipo PJ */
-
-		Scanner entrada = Entradas.entrada;
 
 		if (dataInicioTexto == "") {
 
@@ -61,9 +59,8 @@ public class Seguro {
 			
 		}
 
-		Date dataInicio = null, dataFim = null;
-		Seguro seguro_Aux = new Seguro();
-
+		Date dataInicio, dataFim;
+		
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			dataInicio = formatter.parse(dataInicioTexto);
@@ -75,13 +72,9 @@ public class Seguro {
 			return false;
 		}
 		
-		seguro_Aux.setDataFim(dataFim);
-		seguro_Aux.setDataInicio(dataInicio);;
-		seguro_Aux.setSeguradora(seguradora);
-		seguro_Aux.setDataFim(dataFim);
-		//seguradora.
+		this.dataInicio= dataInicio;
+		this.dataFim = dataFim;
 		
-		System.out.println("Seguro cadastrado com sucesso!");
 		return true;
 	}
 	
@@ -91,25 +84,12 @@ public class Seguro {
 		return id_gerado;
 	}
 
-	public boolean desautorizarCondutor() {
-		
-		return true;
-	}
+	public abstract boolean desautorizarCondutor(String cpf);
+	public abstract boolean autorizarCondutor(Condutor condutor);
+	public abstract boolean calcularValor();
+	public abstract boolean gerarSinistro(Seguro seguro, String dataTexto, String endereco,
+			Condutor condutor, String dataNascTexto);
 	
-	public boolean autorizarCondutor() {
-		
-		return true;
-	}
-	
-	public boolean calcularValor() {
-		
-		return true;
-	}
-	
-	public boolean gerarSinistro() {
-		
-		return true;
-	}
 
 	public Date getDataInicio() {
 		return dataInicio;
