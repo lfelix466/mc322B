@@ -10,28 +10,25 @@ import Enumeradores.CalcSeguro;
 import Utilidades.Entradas;
 
 public class Cliente_PJ extends Cliente {
-
+	
 	private final String cnpj;
-	private Date dataFundacao;
-	private int qtdFuncionarios;
+	private	Date dataFundacao;
+	private ArrayList<Frota> listaFrota;
 
-	// contrutores
-	public Cliente_PJ(String nome, String endereco, Date dataLicensa, String educacao, String genero,
-			String classeEconomica, ArrayList<Veiculo> listaVeiculos, String cnpj, Date dataFundacao,
-			int qtdFuncionarios, Double valorDouble) {
-		super(nome, endereco, dataLicensa, educacao, genero, classeEconomica, listaVeiculos, valorDouble);
+	public Cliente_PJ(String nome, String telefone, String endereco, String email, String cnpj, Date dataFundacao,
+			ArrayList<Frota> listaFrota) {
+		super(nome, telefone, endereco, email);
 		this.cnpj = cnpj;
 		this.dataFundacao = dataFundacao;
-		this.qtdFuncionarios = qtdFuncionarios;
+		this.listaFrota = listaFrota;
 	}
 
 	public Cliente_PJ(String cnpj) {
 		this.cnpj = cnpj;
 	}
 
-	public static boolean CadastrarCliente(Seguradora seguradora, String cnpj, String dataFundacaoTexto,
-			String dataLicensaTexto, int numeroFuncionarios, String nome, String endereco, String educacao,
-			String genero, String classeEconomica) {
+	public static boolean CadastrarCliente(Seguradora seguradora, String nome, String telefone, 
+			String endereco, String email, String cnpj, String dataFundacaoTexto) {
 		/* Funcao atribui valores aos cliente do tipo PJ */
 
 		Scanner entrada = Entradas.entrada;
@@ -46,25 +43,19 @@ public class Cliente_PJ extends Cliente {
 				return false;
 			}
 
-			System.out.println("Digite a data de nascimento do cliente");
+			System.out.println("Digite a data de fundacao do cliente");
 			dataFundacaoTexto = entrada.nextLine();
 
 			if (!Validacao.verificaData(dataFundacaoTexto)) {
-				return false;
-			}
-
-			System.out.println("Digite o numero de funcionarios do cliente");
-			numeroFuncionarios = Integer.parseInt(entrada.nextLine());
-
-			if (!Validacao.verificaData(dataFundacaoTexto)) {
+				System.out.println("Data invalida!");
 				return false;
 			}
 		}
 
-		Date dataFundacao = null;
+		Date dataFundacao;
 		Cliente_PJ cliente_aux = new Cliente_PJ(cnpj);
 
-		if (!cliente_aux.cadastraDadosCliente(nome, endereco, dataLicensaTexto, educacao, genero, classeEconomica)) {
+		if (!cliente_aux.cadastraDadosCliente(nome, telefone, endereco, email)) {
 			return false;
 		}
 
@@ -78,24 +69,13 @@ public class Cliente_PJ extends Cliente {
 			return false;
 		}
 
-		cliente_aux.setDataFundacao(dataFundacao);
-		cliente_aux.setQtdFuncionario(numeroFuncionarios);
+		cliente_aux.setDataFundacao(dataFundacao);		
 		seguradora.cadastrarCliente(cliente_aux);
 
 		System.out.println("Cliente cadastrado com sucesso!");
 		return true;
 	}
 
-	public Double calculaScore() {
-		/* Funcao que calcula o score dos clientes do tipo PJ */
-
-		double valor = 0;
-		valor = CalcSeguro.VALOR_BASE.getValor() * (1 + (qtdFuncionarios) / 100) * getListaVeiculos().size();
-		setValorSeguro(valor);
-		return valor;
-	}
-
-	// getters e setters
 	public Date getDataFundacao() {
 		return dataFundacao;
 	}
@@ -104,33 +84,23 @@ public class Cliente_PJ extends Cliente {
 		this.dataFundacao = dataFundacao;
 	}
 
+	public ArrayList<Frota> getListaFrota() {
+		return listaFrota;
+	}
+
+	public void setListaFrota(ArrayList<Frota> listaFrota) {
+		this.listaFrota = listaFrota;
+	}
+
 	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setQtdFuncionario(int qtdFuncionarios) {
-		this.qtdFuncionarios = qtdFuncionarios;
-	}
-
-	public int getQtdFuncionario() {
-		return qtdFuncionarios;
-	}
-
 	@Override
 	public String toString() {
-
-		String veiculos = "";
-
-		for (int i = 0; i < getListaVeiculos().size(); i++) {
-
-			veiculos = veiculos + getListaVeiculos().get(i);
-			veiculos = veiculos + "\n";
-		}
-
-		return "Informações do cliente:\n" + "Tipo: PJ\n" + "Nome:" + getNome() + "\n" + "CNPJ:" + getCnpj() + "\n"
-				+ "Endereco:" + getEndereco() + "\n" + "Data da licensa:" + getDataLicensa() + "\n" + "Educacao:"
-				+ getEducacao() + "\n" + "Genero:" + getGenero() + "\n" + "Classe econonmica:" + getClasseEconomica()
-				+ "\n" + "Data de fundacao:" + getDataFundacao() + "\n" + "Quantidade de veiculos:"
-				+ getListaVeiculos().size() + "\n" + veiculos;
+		return "Dados do cliente PJ\n"
+				+"CNPJ:"+cnpj+"\n"
+					+"Data de fundacao:"+dataFundacao+"\n"
+						+"Lista da frota:"+listaFrota;
 	}
 }

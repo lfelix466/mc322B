@@ -15,24 +15,30 @@ import Utilidades.Entradas;
 public class Cliente_PF extends Cliente {
 
 	private final String cpf;
-	private Date dataNascimento;
-
+	private String genero;
+	private String educacao;
+	private Date dataNasc;
+	private ArrayList<Veiculo> listaVeiculos;
+	Scanner entrada = Entradas.entrada;
+	
 	// Construtores
-	public Cliente_PF(String nome, String endereco, Date dataLicensa, String educacao, String genero,
-			String classeEconomica, ArrayList<Veiculo> listaVeiculos, String cpf, Date dataNascimento,
-			Double valorSeguro) {
-		super(nome, endereco, dataLicensa, educacao, genero, classeEconomica, listaVeiculos, valorSeguro);
-		this.cpf = cpf;
-		this.dataNascimento = dataNascimento;
-	}
 
+	public Cliente_PF(String nome, String telefone, String endereco, String email, String cpf, String genero,
+			String educacao, Date dataNasc, ArrayList<Veiculo> listaVeiculos) {
+		super(nome, telefone, endereco, email);
+		this.cpf = cpf;
+		this.genero = genero;
+		this.educacao = educacao;
+		this.dataNasc = dataNasc;
+		this.listaVeiculos = listaVeiculos;
+	}
+	
 	public Cliente_PF(String cpf) {
 		this.cpf = cpf;
 	}
 
-	public static boolean CadastrarCliente(Seguradora seguradora, String cpf, String dataNascimentoTexto,
-			String dataLicensaTexto, String nome, String endereco, String educacao, String genero,
-			String classeEconomica) {
+	public static boolean CadastrarCliente(Seguradora seguradora, String cpf, String nome, String telefone,
+			String endereco, String email,String genero, String educacao, String dataNascTexto) {
 		/* Funcao que insere dados no cliente do tipo PF */
 
 		Scanner entrada = Entradas.entrada;
@@ -47,25 +53,36 @@ public class Cliente_PF extends Cliente {
 				return false;
 			}
 
-			System.out.println("Digite a data de nascimento do cliente");
-			dataNascimentoTexto = entrada.nextLine();
+			System.out.println("Digite o genero do cliente");
+			genero = entrada.nextLine();
 
-			if (!Validacao.verificaData(dataNascimentoTexto)) {
-				System.out.println("Data incorreta!");
+			System.out.println("Digite a educacao do cliente");
+			cpf = entrada.nextLine();
+
+			if (!Validacao.verificaNome(educacao)) {
+				System.out.println("Educacao invalida!");
+				return false;
+			}
+			
+			System.out.println("Digite data de nascimento do cliente");
+			dataNascTexto = entrada.nextLine();
+
+			if (!Validacao.verificaData(dataNascTexto)) {
+				System.out.println("Data invalida!");
 				return false;
 			}
 		}
 
-		Date dataNascimento = null;
+		Date dataNasc;
 		Cliente_PF cliente_aux = new Cliente_PF(cpf);
 
-		if (!cliente_aux.cadastraDadosCliente(nome, endereco, dataLicensaTexto, educacao, genero, classeEconomica)) {
+		if (!cliente_aux.cadastraDadosCliente(nome, telefone, endereco, email)) {
 			return false;
 		}
 
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			dataNascimento = formatter.parse(dataNascimentoTexto);
+			dataNasc = formatter.parse(dataNascTexto);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -73,14 +90,60 @@ public class Cliente_PF extends Cliente {
 			return false;
 		}
 
-		cliente_aux.setDataNascimento(dataNascimento);
+		cliente_aux.setDataNasc(dataNasc);
+		cliente_aux.setEmail(email);
+		cliente_aux.setGenero(genero);
+		cliente_aux.setEducacao(educacao);
+		
 		seguradora.cadastrarCliente(cliente_aux);
 		System.out.println("Cliente cadastrado com sucesso!");
 		return true;
 	}
 
+	public boolean cadastrarVeiculo(String placa, String marca, String modelo,
+			int anoFabricacao) {
+		
+		Veiculo veiculo = new Veiculo();
+		if(veiculo.cadastrarVeiculo(placa, marca, modelo, anoFabricacao)) {
+		
+			System.out.println("Veiculo cadastrado com sucesso!");
+			listaVeiculos.add(veiculo);
+			return true;
+			
+		}
+		
+		System.out.println("Erro ao cadastrar veiculo!");
+		return false;
+
+	}
 	
-	
+	public boolean removerVeiculo(String placa) {
+		
+		if(listaVeiculos.isEmpty()) {
+			
+			System.out.println("Cliente nao possui veiculos cadastrados!");
+			return false;
+		}
+		
+		if(placa == "") {
+			
+			System.out.println("Digite a placa do veiculo que deseja remover");
+			placa = entrada.nextLine();
+			
+			for(int i = 0; i<listaVeiculos.size(); i++) {
+				
+				if(listaVeiculos.get(i).getPlaca().equals(placa)) {
+					
+					listaVeiculos.remove(i);
+					System.out.println("Veiculo removido com sucesso!");
+					return true;
+					
+			}}}
+		
+		System.out.println("Veiculo nao encontrado!");
+		
+		return false;
+	}
 
 	public int calculaIdade(Date data) {
 		/* Funcao que retorna a idade do cliente baseado no ano de nascimento */
@@ -91,13 +154,44 @@ public class Cliente_PF extends Cliente {
 
 	}
 
-	// getters e setters
-	public Date getDataNascimento() {
-		return dataNascimento;
+	public String getGenero() {
+		return genero;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getEducacao() {
+		return educacao;
+	}
+
+	public void setEducacao(String educacao) {
+		this.educacao = educacao;
+	}
+
+	public Date getDataNasc() {
+		return dataNasc;
+	}
+
+	public void setDataNasc(Date dataNasc) {
+		this.dataNasc = dataNasc;
+	}
+
+	public ArrayList<Veiculo> getListaVeiculos() {
+		return listaVeiculos;
+	}
+
+	public void setListaVeiculos(ArrayList<Veiculo> listaVeiculos) {
+		this.listaVeiculos = listaVeiculos;
+	}
+
+	public Scanner getEntrada() {
+		return entrada;
+	}
+
+	public void setEntrada(Scanner entrada) {
+		this.entrada = entrada;
 	}
 
 	public String getCpf() {
@@ -106,19 +200,12 @@ public class Cliente_PF extends Cliente {
 
 	@Override
 	public String toString() {
-
-		String veiculos = "";
-
-		for (int i = 0; i < getListaVeiculos().size(); i++) {
-
-			veiculos = veiculos + getListaVeiculos().get(i);
-			veiculos = veiculos + "\n";
-		}
-
-		return "Informações do cliente:\n" + "Tipo: PJ\n" + "Nome:" + getNome() + "\n" + "CPF:" + getCpf() + "\n"
-				+ "Endereco:" + getEndereco() + "\n" + "Data da licensa:" + getDataLicensa() + "\n" + "Educacao:"
-				+ getEducacao() + "\n" + "Genero:" + getGenero() + "\n" + "Classe econonmica:" + getClasseEconomica()
-				+ "\n" + "Data de nascimento:" + getDataNascimento() + "\n" + "Quantidade de veiculos:"
-				+ getListaVeiculos().size() + "\n" + veiculos;
+		return "Dados do cliente PF\n"
+				+"CPF:"+cpf+"\n"
+					+"Genero:"+genero+"\n"
+						+"Educacao:"+educacao+"\n"
+							+"Data de nascimento:"+dataNasc+"\n"
+								+"Lista de veiculos:"+listaVeiculos+";
 	}
+	
 }

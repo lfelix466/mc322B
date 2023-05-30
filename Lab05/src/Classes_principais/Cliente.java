@@ -12,33 +12,23 @@ import Utilidades.Entradas;
 public abstract class Cliente {
 
 	private String nome;
+	private String telefone;
 	private String endereco;
-	private Date dataLicensa;
-	private String educacao;
-	private String genero;
-	private String classeEconomica;
-	private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
-	private Double valorSeguro;
+	private String email;
 	Scanner entrada = Entradas.entrada;
-
-	// Contrutores
-	public Cliente(String nome, String endereco, Date dataLicensa, String educacao, String genero,
-			String classeEconomica, ArrayList<Veiculo> listaVeiculos, Double valorSeguro) {
+	
+	public Cliente(String nome, String telefone, String endereco, String email) {
 		super();
 		this.nome = nome;
+		this.telefone = telefone;
 		this.endereco = endereco;
-		this.dataLicensa = dataLicensa;
-		this.educacao = educacao;
-		this.genero = genero;
-		this.classeEconomica = classeEconomica;
+		this.email = email;
 	}
-
+	
 	public Cliente() {
-
 	}
 
-	public Boolean cadastraDadosCliente(String nome, String endereco, String dataLicensaTexto, String educacao,
-			String genero, String classeEconomica) {
+	public Boolean cadastraDadosCliente(String nome, String telefone, String endereco, String email) {
 		/* Funcao que adiciona valores aos clientes */
 
 		if (nome == "") {
@@ -47,6 +37,7 @@ public abstract class Cliente {
 			nome = entrada.nextLine();
 
 			if (!Validacao.verificaNome(nome)) {
+				System.out.println("Nome invalido!");
 				return false;
 			}
 
@@ -54,56 +45,27 @@ public abstract class Cliente {
 			endereco = entrada.nextLine();
 
 			if (!Validacao.verificaNome(endereco)) {
+				System.out.println("Endereco invalido!");
 				return false;
 			}
 
-			System.out.println("Digite a data de licenca do cliente");
-			dataLicensaTexto = entrada.nextLine();
+			System.out.println("Digite o telefone do cliente");
+			telefone = entrada.nextLine();
 
-			if (!Validacao.verificaNome(dataLicensaTexto)) {
+			if (!Validacao.verificaNumerosInteiros(telefone)) {
+				System.out.println("Telefone invalido!");
 				return false;
 			}
 
-			System.out.println("Digite a educacao do cliente");
-			educacao = entrada.nextLine();
-
-			if (!Validacao.verificaNome(educacao)) {
-				return false;
-			}
-
-			System.out.println("Digite o genero do cliente");
-			genero = entrada.nextLine();
-
-			if (!Validacao.verificaNome(genero)) {
-				return false;
-			}
-
-			System.out.println("Digite a classe economica do cliente");
-			classeEconomica = entrada.nextLine();
-
-			if (!Validacao.verificaNome(classeEconomica)) {
-				return false;
-			}
-		}
-
-		Date dataLicensa = null;
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			dataLicensa = formatter.parse(dataLicensaTexto);
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
+			System.out.println("Digite o email do cliente");
+			email = entrada.nextLine();
+			
 		}
 
 		this.nome = nome;
 		this.endereco = endereco;
-		this.dataLicensa = dataLicensa;
-		this.educacao = educacao;
-		this.genero = genero;
-		this.classeEconomica = classeEconomica;
-		this.valorSeguro = (double) 0;
+		this.telefone = telefone;
+		this.email = email;
 
 		return true;
 	}
@@ -152,16 +114,21 @@ public abstract class Cliente {
 		System.out.println("Nenhum veiculo desse cliente possui essa placa!");
 		return false;
 	}
-	
-	public abstract Double calculaScore();
 
-	// Getters e setters
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public String getEndereco() {
@@ -172,68 +139,30 @@ public abstract class Cliente {
 		this.endereco = endereco;
 	}
 
-	public Date getDataLicensa() {
-		return dataLicensa;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDataLicensa(Date dataLicensa) {
-		this.dataLicensa = dataLicensa;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getEducacao() {
-		return educacao;
+	public Scanner getEntrada() {
+		return entrada;
 	}
 
-	public void setEducacao(String educacao) {
-		this.educacao = educacao;
-	}
-
-	public String getGenero() {
-		return genero;
-	}
-
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
-
-	public String getClasseEconomica() {
-		return classeEconomica;
-	}
-
-	public void setClasseEconomica(String classeEconomica) {
-		this.classeEconomica = classeEconomica;
-	}
-
-	public List<Veiculo> getListaVeiculos() {
-		return listaVeiculos;
-	}
-
-	public void setListaVeiculos(ArrayList<Veiculo> listaVeiculos) {
-		this.listaVeiculos = listaVeiculos;
-	}
-
-	public Double getValorSeguro() {
-		return valorSeguro;
-	}
-
-	public void setValorSeguro(Double valorSeguro) {
-		this.valorSeguro = valorSeguro;
+	public void setEntrada(Scanner entrada) {
+		this.entrada = entrada;
 	}
 
 	@Override
 	public String toString() {
-
-		String veiculos = "";
-
-		for (int i = 0; i < getListaVeiculos().size(); i++) {
-
-			veiculos = veiculos + getListaVeiculos().get(i);
-			veiculos = veiculos + "\n";
-		}
-
-		return "Informações do cliente:\n" + "Tipo: PJ\n" + "Nome:" + getNome() + "\n" + "Endereco:" + getEndereco()
-				+ "\n" + "Data da licensa:" + getDataLicensa() + "\n" + "Educacao:" + getEducacao() + "\n" + "Genero:"
-				+ getGenero() + "\n" + "Classe econonmica:" + getClasseEconomica() + "\n" + "Quantidade de veiculos:"
-				+ getListaVeiculos().size() + "\n" + veiculos;
+		return "Dados do cliente\n"
+				+"Nome:"+nome+"\n"
+					+"Telefone:"+telefone+"\n"
+						+"Endereco:"+endereco+"\n"
+							+"Email:"+email;
 	}
+
+
 }
