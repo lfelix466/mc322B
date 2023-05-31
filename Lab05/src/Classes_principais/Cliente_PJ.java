@@ -75,7 +75,75 @@ public class Cliente_PJ extends Cliente {
 		System.out.println("Cliente cadastrado com sucesso!");
 		return true;
 	}
+	
+	public boolean cadastrarFrota(String code) {
+		
+		if(code == "") {
+			System.out.println("Digite o code da frota");
+			code = entrada.nextLine();
+		}
+		
+		Frota frota = new Frota();
+		frota.setCode(code);
+		listaFrota.add(frota);
+		System.out.println("Frota cadastrada com sucesso!");
+		
+		return true;
+	}
+	
+	public boolean atualizarFrota(String tipo, String qtdVeiculosTexto, String placa,
+			String marca, String modelo, String anoFabricacaoTexto, String code) {
+		
+		int anoFabricacao, qtdVeiculos;
+		
+		if(tipo == "") {
+			
+			System.out.println("1 - Cadastrar veiculo\n"
+					+ "2 - Remover veiculo\n"
+					+ "3 - Apagar frota\n"
+					+ "Digite a opcao desejada");
+			
+			tipo = entrada.nextLine();
 
+			if(!Validacao.verificaNumerosInteiros(tipo)) {
+				System.out.println("Valor invalido");
+				return false;
+			}
+			
+			System.out.println("Digite o code da frota");
+			code = entrada.nextLine();
+			
+		}
+		
+		switch (code) {
+		case "1": 
+			break;
+		case "2":
+			break;
+		case "3":
+			break;
+		default:
+			System.out.println("Opcao invalida!");
+		}
+		
+		return true;
+	}
+	
+	public boolean verificaFrota(Frota frota) {
+		
+		if(frota.getListaVeiculos().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean getVeiculosPorFrota() {
+		
+		
+		
+		return true;
+	}
+	
 	public Date getDataFundacao() {
 		return dataFundacao;
 	}

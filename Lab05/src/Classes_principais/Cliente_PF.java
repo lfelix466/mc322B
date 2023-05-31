@@ -205,7 +205,7 @@ public class Cliente_PF extends Cliente {
 					+"Genero:"+genero+"\n"
 						+"Educacao:"+educacao+"\n"
 							+"Data de nascimento:"+dataNasc+"\n"
-								+"Lista de veiculos:"+listaVeiculos+";
+								+"Lista de veiculos:"+listaVeiculos;
 	}
 	
 }
