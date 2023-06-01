@@ -91,57 +91,106 @@ public class Cliente_PJ extends Cliente {
 		return true;
 	}
 	
-	public boolean atualizarFrota(String tipo, String qtdVeiculosTexto, String placa,
-			String marca, String modelo, String anoFabricacaoTexto, String code) {
+	public boolean atualizarFrota(String tipo, String placa,
+			String marca, String modelo, int anoFabricacao, String code) {
 		
-		int anoFabricacao, qtdVeiculos;
-		
-		if(tipo == "") {
+		String resultado;
+		int indiceFrota = 0;
+	
+			System.out.println("Digite o code da frota");
 			
-			System.out.println("1 - Cadastrar veiculo\n"
-					+ "2 - Remover veiculo\n"
-					+ "3 - Apagar frota\n"
-					+ "Digite a opcao desejada");
+			resultado = getFrota(code);
 			
-			tipo = entrada.nextLine();
-
-			if(!Validacao.verificaNumerosInteiros(tipo)) {
-				System.out.println("Valor invalido");
+			if(resultado == "") {
 				return false;
 			}
 			
+			indiceFrota = Integer.parseInt(resultado);
+		
+			if(tipo == "") {
+				System.out.println("1 - Cadastrar veiculo\n"
+						+ "2 - Remover veiculo\n"
+						+ "3 - Apagar frota\n"
+						+ "Digite a opcao desejada");
+				tipo = entrada.nextLine();
+			}
+				
+			switch (code) {
+				
+				case "1": 
+					listaFrota.get(indiceFrota).addVeiculo(placa, marca, modelo, anoFabricacao);
+					break;
+					
+				case "2":
+					System.out.println("Digite a placa do veiculo que deseja remover");
+					placa = entrada.nextLine();
+					
+					for(int i = 0; i < listaFrota.get(indiceFrota).getListaVeiculos().size(); i++) {
+						
+						if(listaFrota.get(indiceFrota).getListaVeiculos().get(i).getPlaca().equals(placa)) {
+							
+							listaFrota.get(indiceFrota).getListaVeiculos().remove(i);
+							System.out.println("Veiculo removido com sucesso!");
+							return true;
+						}	
+					}
+					System.out.println("Veiculo nao encontrado nesta frota!");
+					break;
+					
+				case "3":
+					listaFrota.remove(indiceFrota);
+					System.out.println("Frota removida com sucesso!");					
+					return true;
+					
+				default:
+					System.out.println("Opcao invalida!");
+					break;
+					
+		}
+		return false;
+	}
+	
+	public boolean getVeiculosPorFrota(String code, String placa) {
+		
+		String resultado = getFrota(code);
+		
+		if(resultado == "") {	
+			return false;
+			
+		}else{
+			
+			int indiceFrota = Integer.parseInt(resultado);
+			for(int i = 0; i < listaFrota.get(indiceFrota).getListaVeiculos().size(); i++) {
+				
+				if(listaFrota.get(indiceFrota).getListaVeiculos().get(i).getPlaca().equals(placa)) {
+					System.out.println("Frota:\n"+listaFrota.get(indiceFrota).toString());
+					System.out.println("Veiculo\n:"+listaFrota.get(indiceFrota).getListaVeiculos().get(i).toString());
+					return true;
+			}}
+			System.out.println("Veiculo nao encontrado nesta frota!");
+		}
+		return false;
+	}
+	
+	private String getFrota(String code) {
+		
+		if(code == "") {
 			System.out.println("Digite o code da frota");
 			code = entrada.nextLine();
-			
 		}
 		
-		switch (code) {
-		case "1": 
-			break;
-		case "2":
-			break;
-		case "3":
-			break;
-		default:
-			System.out.println("Opcao invalida!");
+		if(listaFrota.isEmpty()) {
+			System.out.println("Nao ha frotas cadastradas neste cliente!");
+			return "";
 		}
 		
-		return true;
-	}
-	
-	public boolean verificaFrota(Frota frota) {
+		for(int i = 0; i < listaFrota.size(); i++) {
+			if(listaFrota.get(i).getCode().equals(code)) {	
+				return ""+i;
+		}}
 		
-		if(frota.getListaVeiculos().isEmpty()) {
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean getVeiculosPorFrota() {
-		
-		
-		
-		return true;
+		System.out.println("Frota nao encontrada!");
+		return "";
 	}
 	
 	public Date getDataFundacao() {
