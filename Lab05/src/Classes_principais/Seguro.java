@@ -15,15 +15,14 @@ public abstract class Seguro {
 	private Date dataInicio;
 	private Date dataFim;
 	private Seguradora seguradora;
-	private ArrayList<Sinistro> listaSinistros;
-	private ArrayList<Condutor> listacondutores;
-	private int valorMensal;
+	private ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
+	private ArrayList<Condutor> listacondutores = new ArrayList<Condutor>();
+	private double valorMensal;
 	Scanner entrada = Entradas.entrada;
 	
 	public Seguro(int id, Date dataInicio, Date dataFim, Seguradora seguradora, ArrayList<Sinistro> listaSinistros,
-			ArrayList<Condutor> listacondutores, int valorMensal) {
-		super();
-		this.id = id;
+			ArrayList<Condutor> listacondutores, double valorMensal) {
+		this.id = geraId();
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
 		this.seguradora = seguradora;
@@ -33,7 +32,7 @@ public abstract class Seguro {
 	}
 
 	public Seguro() {
-		this.id = 0;
+		this.id = geraId();
 	}
 	
 	public boolean cadastraDadosSeguro(String dataFimTexto, String dataInicioTexto) {
@@ -55,8 +54,7 @@ public abstract class Seguro {
 			if (!Validacao.verificaData(dataFimTexto)) {
 				System.out.println("Data invalida");
 				return false;
-			}
-			
+			}	
 		}
 
 		Date dataInicio, dataFim;
@@ -74,8 +72,31 @@ public abstract class Seguro {
 		
 		this.dataInicio= dataInicio;
 		this.dataFim = dataFim;
-		
 		return true;
+	}
+	
+	public static Seguro encontraSeguro(Seguradora seguradora, int id) {
+		
+		String idTexto;
+		Scanner entrada = Entradas.entrada;
+		
+		if(id == 0) {
+			
+			System.out.println("Digite o id do Seguro que voce quer cadastrar o sinistro");
+			idTexto = entrada.nextLine();
+			
+			if(!Validacao.verificaNumerosInteiros(idTexto)) {
+				System.out.println("Id invalido!");
+				return null;	
+			}
+		}
+		
+		for (int i = 0; i < seguradora.getListaSeguros().size(); i++) {
+			if (seguradora.getListaSeguros().get(i).getId() == id) {
+				return seguradora.getListaSeguros().get(i);
+			}
+		}
+		return null;
 	}
 	
 	private int geraId() {
@@ -83,14 +104,44 @@ public abstract class Seguro {
 		id_gerado = id_gerado + 1;
 		return id_gerado;
 	}
-
+	
 	public abstract boolean desautorizarCondutor(String cpf);
+	
 	public abstract boolean autorizarCondutor(Condutor condutor);
-	public abstract boolean calcularValor();
+	
+	public abstract double calcularValor();
+	
 	public abstract boolean gerarSinistro(Seguro seguro, String dataTexto, String endereco,
 			Condutor condutor, String dataNascTexto);
 	
-
+	public abstract String getIdCliente();
+	
+	public boolean listarSinistro() {
+		
+		if(listaSinistros.isEmpty()) {
+			System.out.println("Nao ha sinistros cadastrados neste seguro!");
+			return false;
+		}
+		System.out.println("Sinistros do seguro\n");
+		for(int i = 0; i < listaSinistros.size(); i++) {
+			System.out.println(listaSinistros.get(i).toString());
+		}
+		return true;
+	}
+	
+	public boolean listarCondutores() {
+		
+		if(listaSinistros.isEmpty()) {
+			System.out.println("Nao ha condutores cadastrados neste seguro!");
+			return false;
+		}
+		System.out.println("Condutores do seguro\n");
+		for(int i = 0; i < listacondutores.size(); i++) {
+			System.out.println(listacondutores.get(i).toString());
+		}
+		return true;
+	}
+	
 	public Date getDataInicio() {
 		return dataInicio;
 	}
@@ -131,11 +182,11 @@ public abstract class Seguro {
 		this.listacondutores = listacondutores;
 	}
 
-	public int getValorMensal() {
+	public double getValorMensal() {
 		return valorMensal;
 	}
 
-	public void setValorMensal(int valorMensal) {
+	public void setValorMensal(double valorMensal) {
 		this.valorMensal = valorMensal;
 	}
 

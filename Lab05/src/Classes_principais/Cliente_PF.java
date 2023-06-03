@@ -18,7 +18,7 @@ public class Cliente_PF extends Cliente {
 	private String genero;
 	private String educacao;
 	private Date dataNasc;
-	private ArrayList<Veiculo> listaVeiculos;
+	private ArrayList<Veiculo> listaVeiculos  = new ArrayList<Veiculo>();
 	Scanner entrada = Entradas.entrada;
 	
 	// Construtores
@@ -100,6 +100,7 @@ public class Cliente_PF extends Cliente {
 		return true;
 	}
 
+	@Override
 	public boolean cadastrarVeiculo(String placa, String marca, String modelo,
 			int anoFabricacao) {
 		
@@ -144,14 +145,45 @@ public class Cliente_PF extends Cliente {
 		
 		return false;
 	}
+	
+	public static Veiculo encontraVeiculo(String placa, Cliente_PF cliente) {
+		
+		for(int i = 0; i < cliente.getListaVeiculos().size(); i++) {
+			if(cliente.getListaVeiculos().get(i).getPlaca().equals(placa)) {
+				return cliente.getListaVeiculos().get(i);
+		}}
+		return null;
+	}
 
-	public int calculaIdade(Date data) {
-		/* Funcao que retorna a idade do cliente baseado no ano de nascimento */
-		LocalDate dataAtual = LocalDate.now();
-		LocalDate date = LocalDate.ofInstant(data.toInstant(), ZoneId.systemDefault());
-		Period idade = Period.between(date, dataAtual);
-		return idade.getYears();
-
+	
+	public String getId() {
+		return this.cpf;	
+	}
+	
+	@Override
+	public String posicaoVeiculoFrota(String id) {
+		// TODO Auto-generated method stub
+		
+		for(int i = 0; i < listaVeiculos.size(); i++) {
+			
+			if(listaVeiculos.get(i).getPlaca().equals(id)) {
+				return ""+i;
+		}}
+		
+		return "Falso";
+	}
+	
+	public boolean listarVeiculos() {
+		
+		if(listaVeiculos.isEmpty()) {
+			System.out.println("Nao ha veiculos cadastrados neste cliente!");
+			return false;
+		}
+		System.out.println("Veiculos do cliente\n");
+		for(int i = 0; i < listaVeiculos.size(); i++) {
+			System.out.println(listaVeiculos.get(i).toString());
+		}
+		return true;
 	}
 
 	public String getGenero() {

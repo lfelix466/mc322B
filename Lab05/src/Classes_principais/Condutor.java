@@ -16,7 +16,7 @@ public class Condutor {
 	private String endereco;
 	private String email;
 	private Date dataNasc;
-	private ArrayList<Sinistro> listaSinistros;
+	private ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
 	
 	Scanner entrada = Entradas.entrada;
 	
@@ -43,7 +43,7 @@ public class Condutor {
 
 		if (cpf == "") {
 
-			System.out.println("Digite o cnpj do cliente");
+			System.out.println("Digite o cnpj do condutor");
 			cpf = entrada.nextLine();
 
 			if (!Validacao.validarCPF(cpf)) {
@@ -51,14 +51,14 @@ public class Condutor {
 				return false;
 			}
 
-			System.out.println("Digite a data de nascimento do cliente");
+			System.out.println("Digite a data de nascimento do condutor");
 			dataNascTexto = entrada.nextLine();
 
 			if (!Validacao.verificaData(dataNascTexto)) {
 				return false;
 			}
 
-			System.out.println("Digite o nome do cliente");
+			System.out.println("Digite o nome do condutor");
 			nome = entrada.nextLine();
 
 			if (!Validacao.verificaNome(nome)) {
@@ -66,7 +66,7 @@ public class Condutor {
 				return false;
 			}
 			
-			System.out.println("Digite o telefone do cliente");
+			System.out.println("Digite o telefone do condutor");
 			telefone = entrada.nextLine();
 
 			if (!Validacao.verificaNumerosInteiros(telefone)) {
@@ -74,7 +74,7 @@ public class Condutor {
 				return false;
 			}
 			
-			System.out.println("Digite o endereco do cliente");
+			System.out.println("Digite o endereco do condutor");
 			endereco = entrada.nextLine();
 
 			if (!Validacao.verificaNome(endereco)) {
@@ -82,7 +82,7 @@ public class Condutor {
 				return false;
 			}
 
-			System.out.println("Digite o email do cliente");
+			System.out.println("Digite o email do condutor");
 			cpf = entrada.nextLine();
 
 			if (!Validacao.verificaNome(email)) {
@@ -108,6 +108,7 @@ public class Condutor {
 		condutor_Aux.setEmail(email);
 		condutor_Aux.setEndereco(endereco);
 		condutor_Aux.setTelefone(telefone);
+		condutor_Aux.setDataNasc(dataNasc);
 		seguro.autorizarCondutor(condutor_Aux);
 
 		System.out.println("Condutor cadastrado com sucesso!");
@@ -119,6 +120,19 @@ public class Condutor {
 		listaSinistros.add(sinistro);
 		System.out.println("Sinistro adicionado ao condutor com sucesso !");
 		
+		return true;
+	}
+	
+	public boolean listarSinistro() {
+		
+		if(listaSinistros.isEmpty()) {
+			System.out.println("Nao ha sinistros cadastrados neste condutor!");
+			return false;
+		}
+		System.out.println("Sinistros do condutor\n");
+		for(int i = 0; i < listaSinistros.size(); i++) {
+			System.out.println(listaSinistros.get(i).toString());
+		}
 		return true;
 	}
 	

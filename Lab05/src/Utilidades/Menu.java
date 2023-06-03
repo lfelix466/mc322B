@@ -8,15 +8,21 @@ import Enumeradores.MenuOperacoes;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Classes_principais.Cliente;
 import Classes_principais.Cliente_PF;
 import Classes_principais.Cliente_PJ;
 import Classes_principais.Seguradora;
+import Classes_principais.Seguro;
 import Classes_principais.Sinistro;
 
 public class Menu {
 
-	String nomeSeguradora, nomeCliente, placaVeiculo, resultado;
-	int opcao, seguradoraEscolhida = 0, clienteEscolhido = 0;
+	String nomeSeguradora, nomeCliente, placaVeiculo;
+	int opcao;
+	Seguradora seguradoraAux;
+	Cliente clienteAux;
+	Seguro seguroAux;
 
 	Scanner entrada = Entradas.entrada;
 
@@ -28,10 +34,9 @@ public class Menu {
 	private void opcaoEscolhida(ArrayList<Seguradora> listaSeguradora) {
 		/* Funcao que mostra a seguradora e o cliente escolhido */
 		
-		System.out.println("\nSEGURADORA: " + listaSeguradora.get(seguradoraEscolhida).getNome());
-		if (clienteEscolhido != -1) {
-			System.out.println("CLIENTE: "
-					+ listaSeguradora.get(seguradoraEscolhida).getListaClientes().get(clienteEscolhido).getNome());
+		System.out.println("\nSEGURADORA: " + seguradoraAux.getNome();
+		if (clienteAux != null) {
+			System.out.println("CLIENTE: "+clienteAux.getNome());
 		} else {
 			System.out.println("CLIENTE: Nao ha clientes nessa seguradora!");
 		}
@@ -66,11 +71,25 @@ public class Menu {
 					break;
 
 				case GERAR_SINISTRO:
-					Sinistro.gerarSinistro(listaSeguradora, "", "", seguradoraEscolhida, "", clienteEscolhido);
+					seguroAux = Seguro.encontraSeguro(seguradoraAux, 0);
+					
+					if(seguroAux == null) {
+						System.out.println("Seguro nao encontrado!");
+						break;
+					}
+					
+					
+					
+					seguroAux.gerarSinistro(seguroAux, "", "", null, "");
+					break;
+					
+				case GERAR_SEGURO:
+					
+					seguradoraAux.gerarSeguro(0, seguradoraAux, null, null, null, null, "", "");
 					break;
 
 				case TRANSFERIR_SEGURO:
-					Seguradora.transferirSeguro(listaSeguradora, seguradoraEscolhida, clienteEscolhido);
+					//Seguradora.transferirSeguro(listaSeguradora, seguradoraEscolhida, clienteEscolhido);
 					break;
 				case CALCULAR_RECEITA:
 					listaSeguradora.get(seguradoraEscolhida).calcularReceita();
@@ -80,12 +99,11 @@ public class Menu {
 					System.out.println("Qual o nome da seguradora que voce quer encontrar?");
 					nomeSeguradora = entrada.nextLine();
 
-					resultado = Seguradora.encontraSeguradora(listaSeguradora, nomeSeguradora);
+					seguradoraAux = Seguradora.encontraSeguradora(listaSeguradora, nomeSeguradora);
 
-					if (resultado == "Falso") {
-						System.out.println("znSeguradora nao encontrada!");
-					} else {
-						seguradoraEscolhida = Integer.parseInt(resultado);
+					if(seguradoraAux == null){
+						System.out.println("Seguradora nao encontrada!");
+					}else{
 						System.out.println("\nSeguradora trocada com sucesso!");
 						if (listaSeguradora.get(seguradoraEscolhida).getListaClientes().isEmpty()) {
 							clienteEscolhido = -1;

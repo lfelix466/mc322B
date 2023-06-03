@@ -8,13 +8,17 @@ import Utilidades.Entradas;
 public class Frota {
 	
 	private String code;
-	private ArrayList<Veiculo> listaVeiculos;
+	private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
 	Scanner entrada = Entradas.entrada;
 	
 	public Frota(String code, ArrayList<Veiculo> listaVeiculos) {
 		super();
 		this.code = code;
 		this.listaVeiculos = listaVeiculos;
+	}
+	
+	public Frota(String code) {
+		this.code = code;
 	}
 	
 	public Frota() {
@@ -28,12 +32,6 @@ public class Frota {
 		listaVeiculos.add(veiculo);
 		
 		System.out.println("Veiculo adicionado na frota com sucesso!");
-		return true;
-	}
-	
-	public boolean calcularValor() {
-		
-		
 		return true;
 	}
 	
@@ -69,6 +67,19 @@ public class Frota {
 		}
 		
 		return false;
+	}
+	
+	public boolean listarFrota() {
+		
+		if(listaVeiculos.isEmpty()) {
+			System.out.println("Nao ha veiculos cadastrados nesta frota!");
+			return false;
+		}
+		System.out.println("Veiculos da frota\n");
+		for(int i = 0; i < listaVeiculos.size(); i++) {
+			System.out.println(listaVeiculos.get(i).toString());
+		}
+		return true;
 	}
 
 	public String getCode() {

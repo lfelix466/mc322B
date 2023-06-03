@@ -33,10 +33,6 @@ public class Sinistro {
 
 	public static boolean gerarSinistro(Seguro seguro, String dataTexto, String endereco,
 			Condutor condutor, String dataNascTexto) {
-		/*
-		 * Funcao que cria e adiciona valores na seguradora e adiciona eles na
-		 * seguradora escolhida
-		 */
 
 		Scanner entrada = Entradas.entrada;
 		
@@ -69,8 +65,6 @@ public class Sinistro {
 		}
 
 		Date dataNasc, data;
-
-		Sinistro sinistro = new Sinistro();
 		
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -83,6 +77,7 @@ public class Sinistro {
 			return false;
 		}
 		
+		Sinistro sinistro = new Sinistro();
 		sinistro.setCondutor(condutor);
 		sinistro.setData(data);
 		sinistro.setDataNasc(dataNasc);
@@ -91,53 +86,6 @@ public class Sinistro {
 		condutor.adicionarSinistro(sinistro);
 		seguro.getListaSinistros().add(sinistro);
 		return true;
-	}
-
-	public static boolean listarSinistros(ArrayList<Seguradora> listaSeguradora) {
-		/* Funcao que lista todos os sinistros cadastrados em todas as seguradoras */
-
-		int aux = 0;
-
-		System.out.println("Sinistros:\n");
-		for (int i = 0; i < listaSeguradora.size(); i++) {
-			for (int j = 0; j < listaSeguradora.get(i).getListaSinistro().size(); j++) {
-				System.out.println(listaSeguradora.get(i).getListaSinistro().get(j).toString());
-				aux = 1;
-			}
-		}
-		if (aux == 0) {
-			System.out.println("Nao existem sinistros cadastrados!");
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean removerSinistro(ArrayList<Seguradora> listaSeguradora) {
-		/* Remove o sinistro cadastrado escolhido de qualquer seguradora */
-
-		System.out.println("Qual o ID do sinistro que deseja remover?");
-		Scanner entrada = Entradas.entrada;
-		int id = 0;
-
-		try {
-			id = Integer.parseInt(entrada.nextLine());
-		} catch (Exception e) {
-			System.out.println("Id invalido!");
-			return false;
-		}
-
-		for (int i = 0; i < listaSeguradora.size(); i++) {
-			for (int j = 0; j < listaSeguradora.get(i).getListaSinistro().size(); j++) {
-				if (listaSeguradora.get(i).getListaSinistro().get(j).getId() == id) {
-					listaSeguradora.get(i).getListaSinistro().remove(j);
-					System.out.println("Sinistro removido com sucesso!");
-					return true;
-				}
-			}
-		}
-
-		System.out.println("Sinistro nao encontrado");
-		return false;
 	}
 
 	private int geraId() {

@@ -13,14 +13,15 @@ public class Cliente_PJ extends Cliente {
 	
 	private final String cnpj;
 	private	Date dataFundacao;
-	private ArrayList<Frota> listaFrota;
+	private ArrayList<Frota> listaFrota = new ArrayList<Frota>();
+	private int qtdFuncionarios;
 
 	public Cliente_PJ(String nome, String telefone, String endereco, String email, String cnpj, Date dataFundacao,
-			ArrayList<Frota> listaFrota) {
+			int qtdFuncionarios, ArrayList<Frota> listaFrota) {
 		super(nome, telefone, endereco, email);
 		this.cnpj = cnpj;
 		this.dataFundacao = dataFundacao;
-		this.listaFrota = listaFrota;
+		this.qtdFuncionarios = qtdFuncionarios;
 	}
 
 	public Cliente_PJ(String cnpj) {
@@ -28,7 +29,8 @@ public class Cliente_PJ extends Cliente {
 	}
 
 	public static boolean CadastrarCliente(Seguradora seguradora, String nome, String telefone, 
-			String endereco, String email, String cnpj, String dataFundacaoTexto) {
+			String endereco, String email, String cnpj, String dataFundacaoTexto,
+			String qtdFuncionariosTexto) {
 		/* Funcao atribui valores aos cliente do tipo PJ */
 
 		Scanner entrada = Entradas.entrada;
@@ -48,6 +50,14 @@ public class Cliente_PJ extends Cliente {
 
 			if (!Validacao.verificaData(dataFundacaoTexto)) {
 				System.out.println("Data invalida!");
+				return false;
+			}
+			
+			System.out.println("Digite a quantidade de funcionarios do cliente");
+			qtdFuncionariosTexto = entrada.nextLine();
+
+			if (!Validacao.verificaNumerosInteiros(qtdFuncionariosTexto)) {
+				System.out.println("Valor invalido!");
 				return false;
 			}
 		}
@@ -70,12 +80,14 @@ public class Cliente_PJ extends Cliente {
 		}
 
 		cliente_aux.setDataFundacao(dataFundacao);		
+		cliente_aux.setQtdFuncioanios(Integer.parseInt(qtdFuncionariosTexto));
 		seguradora.cadastrarCliente(cliente_aux);
 
 		System.out.println("Cliente cadastrado com sucesso!");
 		return true;
 	}
 	
+	@Override
 	public boolean cadastrarFrota(String code) {
 		
 		if(code == "") {
@@ -150,26 +162,36 @@ public class Cliente_PJ extends Cliente {
 		return false;
 	}
 	
-	public boolean getVeiculosPorFrota(String code, String placa) {
+	public boolean getVeiculosPorFrota(String code, Cliente_PJ cliente) {
 		
-		String resultado = getFrota(code);
+		Frota frota = null;
 		
-		if(resultado == "") {	
-			return false;
+		if(code == "") {
 			
-		}else{
+			System.out.println("Digite o code da frota que deseja encontrar");
+			code = entrada.nextLine();
 			
-			int indiceFrota = Integer.parseInt(resultado);
-			for(int i = 0; i < listaFrota.get(indiceFrota).getListaVeiculos().size(); i++) {
+			frota = Cliente_PJ.encontraFrota(code, cliente);
+			
+			if(frota == null) {
+				System.out.println("Frota nao encontrada!");
+				return false;
+			}
+			
+			if(frota.getListaVeiculos().isEmpty()) {
 				
-				if(listaFrota.get(indiceFrota).getListaVeiculos().get(i).getPlaca().equals(placa)) {
-					System.out.println("Frota:\n"+listaFrota.get(indiceFrota).toString());
-					System.out.println("Veiculo\n:"+listaFrota.get(indiceFrota).getListaVeiculos().get(i).toString());
-					return true;
-			}}
-			System.out.println("Veiculo nao encontrado nesta frota!");
+				System.out.println("Frota nao possui veiculos!");
+				return false;
+				
+			}
+			
+			System.out.println("Veiculos da frota com code:"+code+"\n");
+			for(int i = 0; i < frota.getListaVeiculos().size(); i++) {
+				System.out.println(frota.getListaVeiculos().get(i).toString());
+			}
+			
 		}
-		return false;
+		return true;
 	}
 	
 	private String getFrota(String code) {
@@ -193,6 +215,45 @@ public class Cliente_PJ extends Cliente {
 		return "";
 	}
 	
+	public boolean listarFrota() {
+		
+		if(listaFrota.isEmpty()) {
+			System.out.println("Nao ha frotas cadastrados neste cliente!");
+			return false;
+		}
+		System.out.println("Frotas do condutor\n");
+		for(int i = 0; i < listaFrota.size(); i++) {
+			System.out.println(listaFrota.get(i).toString());
+		}
+		return true;
+	}
+	
+	public String getId() {
+		
+		return this.cnpj;
+		
+	}
+	
+	public String posicaoVeiculoFrota(String code) {
+		
+		for(int i = 0; i < listaFrota.size(); i++) {
+			
+			if(listaFrota.get(i).getCode().equals(code)) {
+				return ""+i;
+		}}
+		
+		return "Falso";
+	}
+	
+	public static Frota encontraFrota(String code, Cliente_PJ cliente) {
+		
+		for(int i = 0; i < cliente.getListaFrota().size(); i++) {
+			if(cliente.getListaFrota().get(i).getCode().equals(code)) {
+				return cliente.getListaFrota().get(i);
+		}}
+		return null;
+	}
+	
 	public Date getDataFundacao() {
 		return dataFundacao;
 	}
@@ -212,12 +273,21 @@ public class Cliente_PJ extends Cliente {
 	public String getCnpj() {
 		return cnpj;
 	}
+	
+	public int getQtdFuncioanios() {
+		return qtdFuncionarios;
+	}
+
+	public void setQtdFuncioanios(int qtdFuncionarios) {
+		this.qtdFuncionarios = qtdFuncionarios;
+	}
 
 	@Override
 	public String toString() {
 		return "Dados do cliente PJ\n"
 				+"CNPJ:"+cnpj+"\n"
 					+"Data de fundacao:"+dataFundacao+"\n"
+						+"Quantidade de funcionarios:"+qtdFuncionarios+"\n"
 						+"Lista da frota:"+listaFrota;
 	}
 }
