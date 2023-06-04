@@ -1,0 +1,18 @@
+ *************************Instrucoes**********************************
+
+*** O arquivo "Entradas_Testes.txt" serve como exemplo para os cadastros dos termos 
+que lá estão listados.
+
+*** A maioria dos cadastros podem ser ser feitos no menu "CADASTROS", mas os cadastros
+associados aos seguros estão no menu "SEGUROS".
+
+*** A maioria das dos processos sao realizados com os itens selecionados e os que não 
+são, é pedido para o usuário digitar. Por exemplo, ao gerar um sinistro, o cliente
+que estara associado a este sinistro é oque fica mostrado na tela, por exemplo, 
+CLIENTE nome:Comercio1
+CLIENTE Tipo:PJ
+
+*** Alguns tipos de opcoes só estão disponíveis para alguns tipos de clienes, por exemplo, 
+"LISTAR_FROTA_POR_CLIENTE" só vai estar disponível para um cliente do tipo PJ, caso um 
+cliente PF estiver selecionado e tentarem chamar esse método, vai aparecer um aviso na
+tela com uma instrução para o usuário escolher uma função semelhante.

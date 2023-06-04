@@ -17,9 +17,10 @@ public class Condutor {
 	private String email;
 	private Date dataNasc;
 	private ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
-	
+
 	Scanner entrada = Entradas.entrada;
-	
+
+	/// Construtores
 	public Condutor(String cpf, String nome, String telefone, String endereco, String email, Date dataNasc,
 			ArrayList<Sinistro> listaSinistros) {
 		this.cpf = cpf;
@@ -30,20 +31,20 @@ public class Condutor {
 		this.dataNasc = dataNasc;
 		this.listaSinistros = listaSinistros;
 	}
-	
+
 	public Condutor(String cpf) {
 		this.cpf = cpf;
 	}
-	
-	public static boolean cadastrarCondutor(Seguro seguro, String cpf, String nome, String telefone, 
-			String endereco, String email, String dataNascTexto) {
-		/* Funcao atribui valores aos cliente do tipo PJ */
+
+	public static boolean cadastrarCondutor(Seguro seguro, String cpf, String nome, String telefone, String endereco,
+			String email, String dataNascTexto) {
+		/* Funcao atribui valores a um condutor */
 
 		Scanner entrada = Entradas.entrada;
 
 		if (cpf == "") {
 
-			System.out.println("Digite o cnpj do condutor");
+			System.out.println("Digite o CPF do condutor");
 			cpf = entrada.nextLine();
 
 			if (!Validacao.validarCPF(cpf)) {
@@ -65,7 +66,7 @@ public class Condutor {
 				System.out.println("Nome invalido!");
 				return false;
 			}
-			
+
 			System.out.println("Digite o telefone do condutor");
 			telefone = entrada.nextLine();
 
@@ -73,7 +74,7 @@ public class Condutor {
 				System.out.println("Telefone invalido!");
 				return false;
 			}
-			
+
 			System.out.println("Digite o endereco do condutor");
 			endereco = entrada.nextLine();
 
@@ -83,12 +84,8 @@ public class Condutor {
 			}
 
 			System.out.println("Digite o email do condutor");
-			cpf = entrada.nextLine();
+			email = entrada.nextLine();
 
-			if (!Validacao.verificaNome(email)) {
-				System.out.println("Email invalido!");
-				return false;
-			}
 		}
 
 		Date dataNasc = null;
@@ -103,7 +100,7 @@ public class Condutor {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		condutor_Aux.setNome(nome);
 		condutor_Aux.setEmail(email);
 		condutor_Aux.setEndereco(endereco);
@@ -113,29 +110,30 @@ public class Condutor {
 
 		System.out.println("Condutor cadastrado com sucesso!");
 		return true;
-	}	
-	
+	}
+
 	public boolean adicionarSinistro(Sinistro sinistro) {
-		
+		/* Funcao que adiciona um sinistro na lista de sinistros de um condutor */
 		listaSinistros.add(sinistro);
 		System.out.println("Sinistro adicionado ao condutor com sucesso !");
-		
 		return true;
 	}
-	
+
 	public boolean listarSinistro() {
-		
-		if(listaSinistros.isEmpty()) {
+		/* Listar todos os sinistros associados a um condutor */
+
+		if (listaSinistros.isEmpty()) {
 			System.out.println("Nao ha sinistros cadastrados neste condutor!");
 			return false;
 		}
 		System.out.println("Sinistros do condutor\n");
-		for(int i = 0; i < listaSinistros.size(); i++) {
+		for (int i = 0; i < listaSinistros.size(); i++) {
 			System.out.println(listaSinistros.get(i).toString());
 		}
 		return true;
 	}
-	
+
+	/// Getters e setters
 	public String getNome() {
 		return nome;
 	}
@@ -190,14 +188,8 @@ public class Condutor {
 
 	@Override
 	public String toString() {
-		return "Dados do condutor"
-				+"Cpf:"+cpf+"\n"
-					+"Nome:"+nome+"\n"
-						+"Telefone:"+telefone+"\n"
-							+"Endereco:"+endereco+"\n"
-								+"Email:"+email+"\n"
-									+"Data de nascimento:"+dataNasc+"\n"
-										+"ListaSinistros:"+listaSinistros;
+		return "Dados do condutor\n" + "CPF:" + cpf + "\n" + "Nome:" + nome + "\n" + "Telefone:" + telefone + "\n"
+				+ "Endereco:" + endereco + "\n" + "Email:" + email + "\n" + "Data de nascimento:" + dataNasc + "\n";
 	}
-	
+
 }
