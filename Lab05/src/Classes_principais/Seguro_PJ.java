@@ -152,10 +152,10 @@ public class Seguro_PJ extends Seguro {
 					+ getListacondutores().get(i).getListaSinistros().size();
 		}
 
-		valor = (CalcSeguro.VALOR_BASE.getValor() * (10 + (cliente.getQtdFuncioanios()) / 10)
-				* (1 + 1 / (quantidadeVeiculos + 2)) * (1 + 1 / (anosPosFundacao + 2))
-				* (2 + quantidadeSinistrosCliente / 10) * (5 + quantidadeSinistrosCondutor / 10));
-
+		valor = (CalcSeguro.VALOR_BASE.getValor() * (10.0 + (cliente.getQtdFuncioanios()) / 10.0)
+				* (1.0 + 1.0 / (quantidadeVeiculos + 2.0)) * (1.0 + 1.0 / (anosPosFundacao + 2.0))
+				* (2.0 + quantidadeSinistrosCliente / 10.0) * (5.0 + quantidadeSinistrosCondutor / 10.0));
+		
 		return valor;
 	}
 
@@ -169,7 +169,7 @@ public class Seguro_PJ extends Seguro {
 	public Frota getFrota() {
 		return frota;
 	}
-
+	
 	public void setFrota(Frota frota) {
 		this.frota = frota;
 	}
@@ -178,6 +178,7 @@ public class Seguro_PJ extends Seguro {
 		return cliente;
 	}
 
+	@Override
 	public void setCliente(Cliente cliente) {
 		this.cliente = (Cliente_PJ) cliente;
 	}

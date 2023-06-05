@@ -109,6 +109,7 @@ public class Cliente_PF extends Cliente {
 		return false;
 	}
 
+	@Override
 	public boolean removerVeiculo(String placa) {
 
 		if (listaVeiculos.isEmpty()) {
@@ -149,6 +150,7 @@ public class Cliente_PF extends Cliente {
 		return null;
 	}
 
+	@Override
 	public String getId() {
 		/* Funcao que retorna a identificacao do cliente */
 		return this.cpf;
@@ -214,14 +216,6 @@ public class Cliente_PF extends Cliente {
 
 	public void setListaVeiculos(ArrayList<Veiculo> listaVeiculos) {
 		this.listaVeiculos = listaVeiculos;
-	}
-
-	public Scanner getEntrada() {
-		return entrada;
-	}
-
-	public void setEntrada(Scanner entrada) {
-		this.entrada = entrada;
 	}
 
 	public String getCpf() {

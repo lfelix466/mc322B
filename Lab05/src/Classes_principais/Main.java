@@ -52,7 +52,8 @@ public class Main {
 		listaSeguradora.get(0).getListaClientes().get(4).cadastrarVeiculo("2020", "FIAT", "PUNTO", 2012);
 		listaSeguradora.get(0).getListaClientes().get(5).cadastrarVeiculo("3030", "VOLKSWAGEN", "GOL", 2017);
 
-		listaSeguradora.get(0).gerarSeguro(2, listaSeguradora.get(0), null, frota, null,
+		listaSeguradora.get(0).gerarSeguro(2, listaSeguradora.get(0), null,
+				listaSeguradora.get(0).getListaClientes().get(0).getListaFrota().get(0), null,
 				(Cliente_PJ) listaSeguradora.get(0).getListaClientes().get(0), "10-10-2022", "10-10-2020");
 
 		listaSeguradora.get(0).gerarSeguro(1, listaSeguradora.get(0), veiculo, null,

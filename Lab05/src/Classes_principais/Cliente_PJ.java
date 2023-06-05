@@ -101,6 +101,7 @@ public class Cliente_PJ extends Cliente {
 		return true;
 	}
 
+	@Override
 	public boolean atualizarFrota(String tipo, String placa, String marca, String modelo, int anoFabricacao,
 			String code) {
 		/*
@@ -255,12 +256,14 @@ public class Cliente_PJ extends Cliente {
 		return true;
 	}
 
+	@Override
 	public String getId() {
 		/* Funcao que retorna a identificacao do cliente */
 		return this.cnpj;
 
 	}
 
+	@Override
 	public String posicaoVeiculoFrota(String code) {
 		/* Funcao que retorna a posicao de um veiculo em uma forta */
 		for (int i = 0; i < listaFrota.size(); i++) {

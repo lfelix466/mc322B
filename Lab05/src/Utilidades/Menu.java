@@ -307,7 +307,7 @@ public class Menu {
 					break;
 					
 				case LISTAR_CONDUTORES_POR_SEGURO:
-					Seguro.listarCondutores(seguradoraAux, "");
+					Seguradora.listarCondutores(seguradoraAux, "");
 					break;
 					
 				case LISTAR_CONDUTORES_POR_SEGURADORA:
@@ -419,11 +419,19 @@ public class Menu {
 
 				switch (menu[opcao]) {
 				case CLIENTE_PF:
-					Cliente_PF.CadastrarCliente(seguradoraAux, "", "", "", "", "", "", "", "");
+					if(Cliente_PF.CadastrarCliente(seguradoraAux, "", "", "", "", "", "", "", "")) {
+						if(clienteAux == null) {
+							clienteAux = seguradoraAux.getListaClientes().get(0);
+						}
+					}
 					break;
 					
 				case CLIENTE_PJ:
-					Cliente_PJ.CadastrarCliente(seguradoraAux, "", "", "", "", "", "", "");
+					if(Cliente_PJ.CadastrarCliente(seguradoraAux, "", "", "", "", "", "", "")){
+						if(clienteAux == null) {
+							clienteAux = seguradoraAux.getListaClientes().get(0);
+						}
+					}
 					break;
 					
 				case VOLTAR:

@@ -103,6 +103,7 @@ public class Seguro_PF extends Seguro {
 		return true;
 	}
 
+	@Override
 	public boolean gerarSinistro(Seguro seguro, String cpf, String dataTexto, String endereco, String dataNascTexto) {
 		/* Funcao que gera um sinistro da seguradora do tipo PF */
 
@@ -136,6 +137,7 @@ public class Seguro_PF extends Seguro {
 		return false;
 	}
 
+	@Override
 	public double calcularValor() {
 		/* Funcao que calcula o valor mensal do seguro PF */
 
@@ -154,18 +156,18 @@ public class Seguro_PF extends Seguro {
 
 		if (idade < 30) {
 			valor = (CalcSeguro.VALOR_BASE.getValor() * CalcSeguro.FATOR_18_30.getValor()
-					* (1 + 1 / (quantidadeVeiculos + 2)) * (2 + quantidadeSinistrosCliente / 10)
-					* (5 + quantidadeSinistrosCondutor / 10));
+					* (1.0 + 1.0 / (quantidadeVeiculos + 2.0)) * (2.0 + quantidadeSinistrosCliente / 10.0)
+					* (5.0 + quantidadeSinistrosCondutor / 10.0));
 
 		} else if (idade <= 60) {
 			valor = (CalcSeguro.VALOR_BASE.getValor() * CalcSeguro.FATOR_30_60.getValor()
-					* (1 + 1 / (quantidadeVeiculos + 2)) * (2 + quantidadeSinistrosCliente / 10)
-					* (5 + quantidadeSinistrosCondutor / 10));
+					* (1.0 + 1.0 / (quantidadeVeiculos + 2.0)) * (2.0 + quantidadeSinistrosCliente / 10.0)
+					* (5.0 + quantidadeSinistrosCondutor / 10.0));
 
 		} else {
 			valor = (CalcSeguro.VALOR_BASE.getValor() * CalcSeguro.FATOR_60_90.getValor()
-					* (1 + 1 / (quantidadeVeiculos + 2)) * (2 + quantidadeSinistrosCliente / 10)
-					* (5 + quantidadeSinistrosCondutor / 10));
+					* (1.0 + 1.0 / (quantidadeVeiculos + 2.0)) * (2.0 + quantidadeSinistrosCliente / 10.0)
+					* (5.0 + quantidadeSinistrosCondutor / 10.0));
 		}
 		return valor;
 	}

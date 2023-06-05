@@ -209,55 +209,6 @@ public abstract class Seguro {
 		return true;
 	}
 
-	public static boolean listarCondutores(Seguradora seguradora, String idTexto) {
-		/* Funcao que lista todos os condutores associados ao seguro */
-		Scanner entrada = Entradas.entrada;
-
-		int id, aux = 0;
-
-		if (idTexto == "") {
-
-			System.out.println("Digite o id do seguro que voce quer listar os condutores");
-			idTexto = entrada.nextLine();
-
-			if (!Validacao.verificaNumerosInteiros(idTexto)) {
-				System.out.println("ID invalido!");
-				return false;
-			}
-		}
-
-		id = Integer.parseInt(idTexto);
-
-		if (seguradora.getListaSeguros().isEmpty()) {
-			System.out.println("Nao ha seguros cadastrados neste seguro!");
-			return false;
-		}
-
-		for (int i = 0; i < seguradora.getListaSeguros().size(); i++) {
-
-			if (seguradora.getListaSeguros().get(i).getId() == id) {
-				aux = 1;
-
-				if (seguradora.getListaSeguros().get(i).getListacondutores().isEmpty()) {
-					System.out.println("Seguradora nao possui condutores cadastrados!");
-					return false;
-				}
-				System.out.println("Condutores do seguro de id:" + seguradora.getListaSeguros().get(i).getId() + "\n");
-				for (int j = 0; j < seguradora.getListaSeguros().get(i).getListacondutores().size(); j++) {
-					System.out.println(seguradora.getListaSeguros().get(i).getListacondutores().get(j).toString());
-					aux = 1;
-				}
-			}
-		}
-
-		if (aux == 0) {
-			System.out.println("Seguro nao encontrado!");
-			return false;
-		}
-
-		return true;
-	}
-
 	// Interfaces que devem ser seguidas pelas classes filhas
 	public abstract boolean desautorizarCondutor(int indice);
 
